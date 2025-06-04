@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">robotsoccer</string>
+    <string name="title_controller">Controller</string>
+    <string name="title_settings">Settings</string>
+</resources>
