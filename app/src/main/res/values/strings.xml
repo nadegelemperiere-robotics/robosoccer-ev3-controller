@@ -1,5 +1,20 @@
 <resources>
-    <string name="app_name">robotsoccer</string>
-    <string name="title_controller">Controller</string>
-    <string name="title_settings">Settings</string>
+    <string name="app_name">robosoccer</string>
+    <string name="controller_title">controller</string>
+    <string name="settings_title">settings</string>
+    <string name="settings_device_subtitle">Devices</string>
+    <string name="settings_device_refresh">Devices refresh</string>
+    <string name="settings_device_swipe">Devices swipe</string>
+    <string name="settings_drive_subtitle">Controller Mode</string>
+    <string name="settings_drive_arcade">arcade</string>
+    <string name="settings_drive_tank">tank</string>
+    <string name="settings_drive">drive</string>
+    <string name="settings_drive_arcade_icon">arcade</string>
+    <string name="settings_drive_tank_icon">tank</string>
+    <string name="settings_reference_subtitle">Controller Reference</string>
+    <string name="settings_reference_field">field centric</string>
+    <string name="settings_reference_robot">robot centric</string>
+    <string name="settings_reference">reference</string>
+    <string name="settings_reference_field_icon">field</string>
+    <string name="settings_reference_robot_icon">robot</string>
 </resources>

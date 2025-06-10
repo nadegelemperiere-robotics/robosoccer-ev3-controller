@@ -4,11 +4,11 @@
     <item
         android:id="@+id/navigation_controller"
         android:icon="@drawable/ic_controller_white_24dp"
-        android:title="@string/title_controller" />
+        android:title="@string/controller_title" />
 
     <item
         android:id="@+id/navigation_settings"
         android:icon="@drawable/ic_settings_white_24dp"
-        android:title="@string/title_settings" />
+        android:title="@string/settings_title" />
 
 </menu>
