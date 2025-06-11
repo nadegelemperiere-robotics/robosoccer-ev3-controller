@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">robosoccer</string>
     <string name="controller_title">controller</string>
+    <string name="controller_status_mode">Mode</string>
+    <string name="controller_status_reference">Reference</string>
+    <string name="controller_status_mode_icon">Mode</string>
+    <string name="controller_status_reference_icon">Reference</string>
     <string name="settings_title">settings</string>
     <string name="settings_device_subtitle">Devices</string>
     <string name="settings_device_refresh">Devices refresh</string>
@@ -17,4 +21,5 @@
     <string name="settings_reference">reference</string>
     <string name="settings_reference_field_icon">field</string>
     <string name="settings_reference_robot_icon">robot</string>
+    <string name="settings_save">Save</string>
 </resources>

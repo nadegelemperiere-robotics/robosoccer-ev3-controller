@@ -1,0 +1,23 @@
+syntax = "proto3";
+package settings;
+
+option java_package = "org.mantabots.robosoccer.proto";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+
+enum DriveModeProto {
+  ARCADE = 0;
+  TANK   = 1;
+}
+
+enum DriveReferenceProto {
+  ROBOT_CENTRIC = 0;
+  FIELD_CENTRIC = 1;
+}
+
+message SettingsProto {
+  DriveModeProto      mode      = 1;
+  DriveReferenceProto reference = 2;
+  string              device    = 3;
+}

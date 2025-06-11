@@ -6,9 +6,11 @@
    ------------------------------------------------------- */
 package org.mantabots.robosoccer.repository
 
+/* System includes */
+import java.util.UUID
+
 /* Android includes */
 import android.bluetooth.BluetoothAdapter
-import android.bluetooth.BluetoothDevice
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Build
@@ -21,6 +23,8 @@ import androidx.core.content.ContextCompat
 class Ev3Service(context: Context) {
 
     private val mContext = context
+    private val sUuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb")
+
 
     /** List all paired EV3 devices */
     fun listPaired() : List<String> {
@@ -29,18 +33,16 @@ class Ev3Service(context: Context) {
         var needPermission = Build.VERSION.SDK_INT >= 31
         var permission = ContextCompat.checkSelfPermission(mContext, Manifest.permission.BLUETOOTH_CONNECT )
 
-        if (needPermission && permission != PackageManager.PERMISSION_GRANTED) {
-            return emptyList()  // caller should request permission first
-        }
-        else {
-//            return BluetoothAdapter.getDefaultAdapter()
-//                ?.bondedDevices
-//                ?.filter { it.name?.startsWith("EV3", ignoreCase = true) == true }
-//                ?.sortedBy { it.name }
-//                ?.mapNotNull { it.name }
-//                ?: emptyList()
+        return if (needPermission && permission != PackageManager.PERMISSION_GRANTED) {
+            emptyList()  // caller should request permission first
+        } else {
+            BluetoothAdapter.getDefaultAdapter()
+                ?.bondedDevices
+                ?.filter { it.uuids.any { it.uuid == sUuid } }
+                ?.sortedBy { it.name }
+                ?.mapNotNull { it.name }
+                ?: emptyList()
 
-            return  listOf("test1", "test2", "test3")
         }
     }
 

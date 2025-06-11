@@ -20,6 +20,66 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- ───────────────────────────  S T A T U S  ─────────────────────-──────────── -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/controller_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/controller_title">
+
+        <TextView
+            android:id="@+id/controller_status_mode_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:text="@string/controller_status_mode"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/controller_status_mode_icon" />
+
+        <ImageView
+            android:id="@+id/controller_status_mode_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/controller_status_mode_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/controller_status_mode_text"
+            app:layout_constraintEnd_toStartOf="@+id/controller_status_reference_text"/>
+
+        <TextView
+            android:id="@+id/controller_status_reference_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:text="@string/controller_status_reference"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/controller_status_mode_icon"
+            app:layout_constraintEnd_toStartOf="@+id/controller_status_reference_icon" />
+ 
+        <ImageView
+            android:id="@+id/controller_status_reference_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="8dp"
+            android:contentDescription="@string/controller_status_reference_icon"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/controller_status_reference_text"
+            app:layout_constraintEnd_toStartOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+
     <!-- ────────────────── Guideline keeps controls in thumb-zone ────────────────── -->
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/controller_guideline_bottom"
@@ -61,6 +121,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
