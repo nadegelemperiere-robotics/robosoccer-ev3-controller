@@ -9,11 +9,13 @@
         android:id="@+id/navigation_controller"
         android:name="org.mantabots.robosoccer.ui.controller.ControllerFragment"
         android:label="@string/controller_title"
+        android:textAllCaps="true"
         tools:layout="@layout/fragment_controller" />
 
     <fragment
         android:id="@+id/navigation_settings"
         android:name="org.mantabots.robosoccer.ui.settings.SettingsFragment"
         android:label="@string/settings_title"
+        android:textAllCaps="true"
         tools:layout="@layout/fragment_settings" />
 </navigation>

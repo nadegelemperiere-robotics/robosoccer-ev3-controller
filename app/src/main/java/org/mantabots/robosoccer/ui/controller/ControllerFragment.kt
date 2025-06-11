@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 
 /* Androidx includes */
@@ -37,6 +38,8 @@ class ControllerFragment : Fragment() {
 
     private lateinit var mMode : ImageView
     private lateinit var mReference : ImageView
+    private lateinit var mArcade : ConstraintLayout 
+    private lateinit var mTank : ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,25 +50,33 @@ class ControllerFragment : Fragment() {
         _binding = FragmentControllerBinding.inflate(inflater, container, false)
         val root: View = mBinding.root
 
+        mArcade = mBinding.controllerArcade
+        mTank = mBinding.controllerTank
+
         mMode = mBinding.controllerStatusModeIcon
 
         if (mParameters.state.value.driveMode == DriveMode.ARCADE) {
-            val arcade: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arcade_white_24dp)
+            val arcade: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arcade_teal_24dp)
             mMode.setImageDrawable(arcade)
+            mArcade.visibility = View.VISIBLE
+            mTank.visibility = View.GONE
+
         }
         else if (mParameters.state.value.driveMode == DriveMode.TANK) {
-            val tank: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_tank_white_24dp)
+            val tank: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_tank_teal_24dp)
             mMode.setImageDrawable(tank)
+            mArcade.visibility = View.GONE
+            mTank.visibility = View.VISIBLE
         }
 
         mReference = mBinding.controllerStatusReferenceIcon
 
         if (mParameters.state.value.driveReference == DriveReference.FIELD_CENTRIC) {
-            val field: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_field_white_24dp)
+            val field: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_field_teal_24dp)
             mReference.setImageDrawable(field)
         }
         else if (mParameters.state.value.driveReference == DriveReference.ROBOT_CENTRIC) {
-            val robot: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_robot_white_24dp)
+            val robot: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_robot_teal_24dp)
             mReference.setImageDrawable(robot)
         }
 
@@ -78,14 +89,6 @@ class ControllerFragment : Fragment() {
     }
 //
 //     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(view) {
-//
-//         val groupArcade = findViewById<Group>(R.id.group_arcade)
-//         val groupTank   = findViewById<Group>(R.id.group_tank)
-//         val isArcade    = findViewById<Switch>(R.id.settings_drive)
-//
-//         groupArcade.visibility = if (arcadeMode) View.VISIBLE else View.GONE
-//         groupTank.visibility   = if (arcadeMode) View.GONE    else View.VISIBLE
-//
 //
 //        setOnLongClickListener { arcadeMode = !arcadeMode; updateUi(); true }
 //

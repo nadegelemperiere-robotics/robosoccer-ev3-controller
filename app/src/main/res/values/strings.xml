@@ -1,11 +1,11 @@
 <resources>
     <string name="app_name">robosoccer</string>
-    <string name="controller_title">controller</string>
+    <string name="controller_title">CONTROLLER</string>
     <string name="controller_status_mode">Mode</string>
     <string name="controller_status_reference">Reference</string>
     <string name="controller_status_mode_icon">Mode</string>
     <string name="controller_status_reference_icon">Reference</string>
-    <string name="settings_title">settings</string>
+    <string name="settings_title">SETTINGS</string>
     <string name="settings_device_subtitle">Devices</string>
     <string name="settings_device_refresh">Devices refresh</string>
     <string name="settings_device_swipe">Devices swipe</string>
