@@ -24,10 +24,12 @@ import kotlinx.coroutines.flow.map
 /* Local includes */
 import org.mantabots.robosoccer.model.DriveMode
 import org.mantabots.robosoccer.model.DriveReference
+import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
 
 import org.mantabots.robosoccer.proto.DriveModeProto
 import org.mantabots.robosoccer.proto.DriveReferenceProto
+import org.mantabots.robosoccer.proto.MotorProto
 import org.mantabots.robosoccer.proto.SettingsProto
 
 /* ---------- 1. Serializer ---------- */
@@ -70,7 +72,21 @@ class SettingsRepository(private val context: Context) {
                 DriveReferenceProto.FIELD_CENTRIC -> DriveReference.FIELD_CENTRIC
                 DriveReferenceProto.UNRECOGNIZED -> DriveReference.FIELD_CENTRIC
             },
-            device = proto.device
+            device = proto.device,
+            leftWheel = when (proto.left) {
+                MotorProto.A -> Motor.A
+                MotorProto.B -> Motor.B
+                MotorProto.C -> Motor.C
+                MotorProto.D -> Motor.D
+                MotorProto.UNRECOGNIZED -> Motor.B
+            },
+            rightWheel = when (proto.right) {
+                MotorProto.A -> Motor.A
+                MotorProto.B -> Motor.B
+                MotorProto.C -> Motor.C
+                MotorProto.D -> Motor.D
+                MotorProto.UNRECOGNIZED -> Motor.C
+            }
         )
     }
 
@@ -86,6 +102,18 @@ class SettingsRepository(private val context: Context) {
                     else DriveReferenceProto.FIELD_CENTRIC.number
                 )
                 .setDevice(new.device)
+                .setLeftValue(
+                    if (new.leftWheel == Motor.A) MotorProto.A.number
+                    else if (new.leftWheel == Motor.B) MotorProto.B.number
+                    else if (new.leftWheel == Motor.C) MotorProto.C.number
+                    else MotorProto.D.number
+                )
+                .setRightValue(
+                    if (new.rightWheel == Motor.A) MotorProto.A.number
+                    else if (new.rightWheel == Motor.B) MotorProto.B.number
+                    else if (new.rightWheel == Motor.C) MotorProto.C.number
+                    else MotorProto.D.number
+                )
                 .build()
         }
     }

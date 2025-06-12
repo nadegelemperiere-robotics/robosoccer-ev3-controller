@@ -21,5 +21,8 @@
     <string name="settings_reference">reference</string>
     <string name="settings_reference_field_icon">field</string>
     <string name="settings_reference_robot_icon">robot</string>
+    <string name="settings_motors_subtitle">Motors</string>
+    <string name="settings_motors_left">left wheel</string>
+    <string name="settings_motors_right">right wheel</string>
     <string name="settings_save">Save</string>
 </resources>

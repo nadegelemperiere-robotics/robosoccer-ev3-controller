@@ -16,8 +16,17 @@ enum DriveReferenceProto {
   FIELD_CENTRIC = 1;
 }
 
+enum MotorProto {
+  A = 0;
+  B = 1;
+  C = 2;
+  D = 3;
+}
+
 message SettingsProto {
   DriveModeProto      mode      = 1;
   DriveReferenceProto reference = 2;
   string              device    = 3;
+  MotorProto          left      = 4;
+  MotorProto          right     = 5;
 }

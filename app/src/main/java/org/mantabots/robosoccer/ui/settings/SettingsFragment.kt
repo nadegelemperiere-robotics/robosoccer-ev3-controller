@@ -16,19 +16,14 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.Switch
-import android.widget.TextView
 
 /* Androidx includes */
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
-import androidx.recyclerview.widget.RecyclerView
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+import androidx.recyclerview.widget.LinearSnapHelper
 
 /* Kotlin includes */
 import kotlin.getValue
@@ -40,13 +35,14 @@ import kotlinx.coroutines.launch
 import org.mantabots.robosoccer.databinding.FragmentSettingsBinding
 import org.mantabots.robosoccer.repository.Ev3Service
 import org.mantabots.robosoccer.repository.SettingsRepository
-import org.mantabots.robosoccer.R
 import org.mantabots.robosoccer.model.DriveMode
 import org.mantabots.robosoccer.model.DriveReference
+import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
 import org.mantabots.robosoccer.model.SharedData
 
 class SettingsFragment : Fragment() {
+
 
     private var _binding: FragmentSettingsBinding? = null
 
@@ -55,12 +51,16 @@ class SettingsFragment : Fragment() {
     private val mBinding get() = _binding!!
     private val mData: SharedData by activityViewModels()
     private var mDevice = ""
+    private var mLeftMotor = Motor.B
+    private var mRightMotor = Motor.C
+
     private lateinit var mRepository: SettingsRepository
-    private lateinit var mAdapter : DeviceAdapter
-    private lateinit var mSwipe : SwipeRefreshLayout
+    private lateinit var mDeviceAdapter : DeviceAdapter
     private lateinit var mSaveButton : Button
     private lateinit var mModeSwitch : Switch
     private lateinit var mReferenceSwitch : Switch
+    private lateinit var mLeftMotorAdapter : MotorAdapter
+    private lateinit var mRightMotorAdapter: MotorAdapter
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -77,28 +77,42 @@ class SettingsFragment : Fragment() {
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = mBinding.root
 
-        mSwipe = mBinding.settingsDeviceSwipe
-        mSwipe.setOnRefreshListener { refreshDevices() }
-
+        /* Initialize EV3 devices list */
         val refreshButton : ImageButton = mBinding.settingsDeviceRefresh
         refreshButton.setOnClickListener{ refreshDevices() }
 
-        val deviceChoices : RecyclerView = mBinding.settingsDeviceRecycler
-        mAdapter = DeviceAdapter { device ->
-            mDevice = device
-        }
-        deviceChoices.layoutManager = LinearLayoutManager(requireContext())
-        deviceChoices.adapter = mAdapter
-        deviceChoices.addItemDecoration(
-            DividerItemDecoration(requireContext(), DividerItemDecoration.VERTICAL)
-        )
+        mDeviceAdapter = DeviceAdapter { device -> mDevice = device }
+        mBinding.settingsDeviceRecycler.layoutManager = LinearLayoutManager(requireContext())
+        mBinding.settingsDeviceRecycler.adapter = mDeviceAdapter
+        LinearSnapHelper().attachToRecyclerView(mBinding.settingsDeviceRecycler)
         refreshDevices()
 
+        /* Initialize motors choices list */
+        val motors : List<String> = Motor.entries.map(Motor::displayName)
+
+        mLeftMotorAdapter = MotorAdapter { motor -> mLeftMotor = Motor.fromString(motor) }
+        mBinding.settingsMotorsLeftWheel.layoutManager = LinearLayoutManager(requireContext())
+        mBinding.settingsMotorsLeftWheel.adapter = mLeftMotorAdapter
+        LinearSnapHelper().attachToRecyclerView(mBinding.settingsMotorsLeftWheel)
+        mLeftMotorAdapter.submitList(motors)
+
+        mRightMotorAdapter = MotorAdapter { motor -> mRightMotor = Motor.fromString(motor) }
+        mBinding.settingsMotorsRightWheel.layoutManager = LinearLayoutManager(requireContext())
+        mBinding.settingsMotorsRightWheel.adapter = mRightMotorAdapter
+        LinearSnapHelper().attachToRecyclerView(mBinding.settingsMotorsRightWheel)
+        mRightMotorAdapter.submitList(motors)
+
+        /* Configure saving */
+        mSaveButton = mBinding.settingsSave
+        mSaveButton.setOnClickListener { save() }
+
+        /* Restore previous configuration */
         mModeSwitch = mBinding.settingsMode
         mReferenceSwitch = mBinding.settingsReference
 
-        mSaveButton = mBinding.settingsSave
-        mSaveButton.setOnClickListener { save() }
+        lifecycleScope.launchWhenStarted {
+            mRepository.settings.collect { load(it) }
+        }
 
         return root
     }
@@ -112,50 +126,35 @@ class SettingsFragment : Fragment() {
         val ctx = requireContext()
         val ev3 = Ev3Service(ctx)
         val devices = ev3.listPaired()
-        mSwipe.isRefreshing = true
-        mAdapter.submitList(devices)
-        mSwipe.isRefreshing = false
-
+        mDeviceAdapter.submitList(devices)
     }
 
     private fun save() {
         val settings = Settings(
             driveMode       = if (mModeSwitch.isChecked) DriveMode.TANK else DriveMode.ARCADE,
             driveReference  = if (mReferenceSwitch.isChecked) DriveReference.ROBOT_CENTRIC else DriveReference.FIELD_CENTRIC,
-            device       = mDevice
+            device          = mDevice,
+            leftWheel       = mLeftMotor,
+            rightWheel      = mRightMotor
         )
         mData.update(settings)
-        // ② persist to DataStore through the repository
-        viewLifecycleOwner.lifecycleScope.launch {
-            mRepository.save(settings)      // suspend fun
-        }
+
+        lifecycleScope.launch { mRepository.save(settings) }
         findNavController().popBackStack()
     }
 
-}
+    private fun load(settings : Settings) {
 
-/* ── ListAdapter ── */
-private class DeviceAdapter(
-    private val click: (String) -> Unit
-) : ListAdapter<String, DeviceVH>(Diff) {
+        mModeSwitch.isChecked = (settings.driveMode == DriveMode.TANK)
 
-    override fun onCreateViewHolder(p: ViewGroup, v: Int) =
-        DeviceVH(LayoutInflater.from(p.context)
-            .inflate(R.layout.device_choice, p, false))
+        mReferenceSwitch.isChecked = (settings.driveReference == DriveReference.ROBOT_CENTRIC)
 
-    override fun onBindViewHolder(h: DeviceVH, pos: Int) =
-        h.bind(getItem(pos), click)
+        mBinding.settingsMotorsLeftWheel.smoothScrollToPosition(settings.leftWheel.ordinal)
+        mBinding.settingsMotorsRightWheel.smoothScrollToPosition(settings.rightWheel.ordinal)
 
-    private object Diff : DiffUtil.ItemCallback<String>() {
-        override fun areItemsTheSame(a: String, b: String) = a == b
-        override fun areContentsTheSame(a: String, b: String) = a == b
+        val position = mDeviceAdapter.currentList.indexOf(settings.device)
+        if (position >= 0) { mBinding.settingsDeviceRecycler.smoothScrollToPosition(position) }
+
     }
-}
 
-private class DeviceVH(view: View) : RecyclerView.ViewHolder(view) {
-    private val name = view.findViewById<TextView>(R.id.device_choice)
-    fun bind(d: String, click: (String) -> Unit) {
-        name.text = d
-        itemView.setOnClickListener { click(d) }
-    }
 }

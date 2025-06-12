@@ -5,16 +5,17 @@
     android:id="@+id/settings_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:elevation="@dimen/lines_margin"
     tools:context=".ui.settings.SettingsFragment">
 
     <TextView
         android:id="@+id/settings_device_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/lines_margin"
         android:text="@string/settings_device_subtitle"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -23,8 +24,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_device_container"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/lines_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -33,47 +33,48 @@
 
         <ImageButton
             android:id="@+id/settings_device_refresh"
-            android:layout_width="48dp"
+            android:layout_width="@dimen/lines_height_inner"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
             android:backgroundTint="@color/teal_medium"
             android:contentDescription="@string/settings_device_refresh"
+            android:elevation="3dp"
             android:src="@drawable/ic_refresh_white_24dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings_device_swipe"
+            app:layout_constraintEnd_toStartOf="@+id/settings_device_recycler"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="@+id/settings_device_swipe"
+            app:layout_constraintRight_toRightOf="@+id/settings_device_recycler"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/settings_device_swipe"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_device_recycler"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
+            android:clickable="false"
+            android:contentDescription="@string/settings_device_swipe"
+            android:gravity="center"
+            android:scrollbars="vertical"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size"
+            app:flow_verticalAlign="center"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/settings_device_refresh"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/settings_device_recycler"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:contentDescription="@string/settings_device_swipe"
-                android:scrollbars="vertical"
-                tools:listitem="@layout/device_choice" />
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
         android:id="@+id/settings_drive_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/lines_margin"
         android:text="@string/settings_drive_subtitle"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -82,8 +83,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_drive_container"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/lines_height"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_drive_subtitle">
@@ -92,67 +92,44 @@
             android:id="@+id/settings_arcade"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
             android:gravity="center"
             android:text="@string/settings_drive_arcade"
             android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings_arcade_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/settings_arcade_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:contentDescription="@string/settings_drive_arcade_icon"
-            android:src="@drawable/ic_arcade_white_24dp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings_mode"
-            app:layout_constraintStart_toEndOf="@+id/settings_arcade"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Switch
             android:id="@+id/settings_mode"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
             android:gravity="center"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBaseline_toBaselineOf="@+id/settings_arcade"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_arcade_icon"
-            app:layout_constraintRight_toLeftOf="@+id/settings_tank_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/settings_tank_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:contentDescription="@string/settings_drive_tank_icon"
-            android:src="@drawable/ic_tank_white_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings_tank"
-            app:layout_constraintStart_toEndOf="@+id/settings_mode"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/settings_tank"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
             android:gravity="center"
             android:text="@string/settings_drive_tank"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBaseline_toBaselineOf="@+id/settings_arcade"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/settings_tank_icon"
+            app:layout_constraintStart_toEndOf="@+id/settings_mode"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -161,10 +138,10 @@
         android:id="@+id/settings_reference_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="@dimen/lines_margin"
         android:text="@string/settings_reference_subtitle"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="@dimen/font_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -173,8 +150,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_reference_container"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_margin="8dp"
+        android:layout_height="@dimen/lines_height"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_reference_subtitle">
@@ -183,68 +159,128 @@
             android:id="@+id/settings_field"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
             android:gravity="center"
             android:text="@string/settings_reference_field"
             android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings_field_icon"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/settings_field_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:contentDescription="@string/settings_reference_field_icon"
-            android:src="@drawable/ic_field_white_24dp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/settings_reference"
-            app:layout_constraintStart_toEndOf="@+id/settings_field"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Switch
             android:id="@+id/settings_reference"
             android:layout_width="50dp"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:gravity="center"
+            android:layout_margin="@dimen/lines_margin"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBaseline_toBaselineOf="@+id/settings_field"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_field_icon"
-            app:layout_constraintRight_toLeftOf="@+id/settings_robot_icon"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/settings_robot_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_margin="8dp"
-            android:contentDescription="@string/settings_reference_robot_icon"
-            android:src="@drawable/ic_robot_white_24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings_robot"
-            app:layout_constraintStart_toEndOf="@+id/settings_reference"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/settings_robot"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_margin="8dp"
+            android:layout_margin="@dimen/lines_margin"
             android:gravity="center"
             android:text="@string/settings_reference_robot"
             android:textAlignment="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBaseline_toBaselineOf="@+id/settings_field"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/settings_robot_icon"
+            app:layout_constraintStart_toEndOf="@+id/settings_reference"
             app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/settings_motors_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/lines_margin"
+        android:text="@string/settings_motors_subtitle"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_reference_container" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_subtitle">
+
+        <TextView
+            android:id="@+id/settings_motors_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:gravity="center"
+            android:text="@string/settings_motors_left"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_wheel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_left_wheel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:contentDescription="@string/settings_motors_left"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/font_size"
+            android:textAlignment="center"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+
+        <TextView
+            android:id="@+id/settings_motors_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:gravity="center"
+            android:text="@string/settings_motors_right"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_wheel"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_wheel"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_right_wheel"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:contentDescription="@string/settings_motors_right"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/font_size"
+            android:textAlignment="center"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -252,7 +288,7 @@
         android:id="@+id/settings_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="@dimen/lines_margin"
         android:text="@string/settings_save"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

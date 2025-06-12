@@ -17,15 +17,19 @@ import kotlinx.coroutines.flow.asStateFlow
 data class Settings(
     var driveMode: DriveMode,
     var driveReference: DriveReference,
-    var device: String)
+    var device: String,
+    var leftWheel: Motor,
+    var rightWheel: Motor)
 
 class SharedData : ViewModel() {
-    private val _state = MutableStateFlow(Settings(DriveMode.ARCADE, DriveReference.ROBOT_CENTRIC, ""))
+    private val _state = MutableStateFlow(Settings(DriveMode.ARCADE, DriveReference.FIELD_CENTRIC, "", Motor.B, Motor.C))
     val state: StateFlow<Settings> = _state.asStateFlow()
 
     fun update(new: Settings)               { _state.value = new }
     fun device(new: String)                 { _state.value.device = new}
     fun driveMode(new: DriveMode)           { _state.value.driveMode = new}
     fun driveReference(new: DriveReference) { _state.value.driveReference = new}
+    fun leftWheel(new: Motor)               { _state.value.leftWheel = new}
+    fun rightWheel(new: Motor)              { _state.value.rightWheel = new}
 }
 
