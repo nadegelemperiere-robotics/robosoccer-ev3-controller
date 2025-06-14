@@ -2,7 +2,7 @@
    Copyright (c) [2025] Nadege LEMPERIERE
    All rights reserved
    -------------------------------------------------------
-   Adapter to manage motors display and selection
+   Adapter to manage second attachmen motor display and selection
    ------------------------------------------------------- */
 
 package org.mantabots.robosoccer.ui.settings
@@ -21,20 +21,20 @@ import androidx.recyclerview.widget.RecyclerView
 /* Local includes */
 import org.mantabots.robosoccer.R
 
-class MotorAdapter(
+class SecondMotorAdapter(
     private val select: (String) -> Unit
-) : ListAdapter<String, MotorVH>(Diff) {
+) : ListAdapter<String, SecondMotorVH>(Diff) {
 
     override fun onCreateViewHolder(p: ViewGroup, v: Int) =
-        MotorVH(LayoutInflater.from(p.context)
+        SecondMotorVH(LayoutInflater.from(p.context)
             .inflate(R.layout.string_choice, p, false))
 
-    override fun onBindViewHolder(h: MotorVH, pos: Int) =
+    override fun onBindViewHolder(h: SecondMotorVH, pos: Int) =
         h.bind(getItem(pos))
 
-    override fun onViewAttachedToWindow(h: MotorVH) {
+    override fun onViewAttachedToWindow(h: SecondMotorVH) {
         super.onViewAttachedToWindow(h)
-        h.select(select)    // callback with the row’s string
+        h.select(select)
     }
 
     private object Diff : DiffUtil.ItemCallback<String>() {
@@ -43,7 +43,7 @@ class MotorAdapter(
     }
 }
 
-class MotorVH(view: View) : RecyclerView.ViewHolder(view) {
+class SecondMotorVH(view: View) : RecyclerView.ViewHolder(view) {
 
     private val name = view.findViewById<TextView>(R.id.string_choice)
     private var item = ""
@@ -53,8 +53,8 @@ class MotorVH(view: View) : RecyclerView.ViewHolder(view) {
         item = d
     }
 
-    fun select(select: (String) -> Unit) {
-        select(item)
+    fun select(function: (String) -> Unit) {
+        function(item)
     }
 
 }

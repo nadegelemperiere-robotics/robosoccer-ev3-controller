@@ -3,7 +3,8 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="lines_height">56dp</dimen>
+    <dimen name="small_lines_height">48dp</dimen>
     <dimen name="lines_margin">4dp</dimen>
-    <dimen name="lines_height_inner">48dp</dimen> <!-- lines_height - 2 * lines_margin -->
-    <dimen name="font_size">18sp</dimen>
+    <dimen name="lines_height_inner">56dp</dimen>
+    <dimen name="font_size">16sp</dimen>
 </resources>

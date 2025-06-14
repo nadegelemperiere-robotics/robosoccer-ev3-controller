@@ -21,6 +21,7 @@ enum MotorProto {
   B = 1;
   C = 2;
   D = 3;
+  UNDEFINED = 10;
 }
 
 message SettingsProto {
@@ -29,4 +30,6 @@ message SettingsProto {
   string              device    = 3;
   MotorProto          left      = 4;
   MotorProto          right     = 5;
+  MotorProto          first     = 6;
+  MotorProto          second    = 7;
 }

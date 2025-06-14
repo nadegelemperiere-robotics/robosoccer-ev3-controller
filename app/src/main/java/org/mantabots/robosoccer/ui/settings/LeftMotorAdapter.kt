@@ -2,7 +2,7 @@
    Copyright (c) [2025] Nadege LEMPERIERE
    All rights reserved
    -------------------------------------------------------
-   Adapter to manage paired EV3 display and selection
+   Adapter to manage left motor display and selection
    ------------------------------------------------------- */
 
 package org.mantabots.robosoccer.ui.settings
@@ -21,18 +21,18 @@ import androidx.recyclerview.widget.RecyclerView
 /* Local includes */
 import org.mantabots.robosoccer.R
 
-class DeviceAdapter(
+class LeftMotorAdapter(
     private val select: (String) -> Unit
-) : ListAdapter<String, DeviceVH>(Diff) {
+) : ListAdapter<String, LeftMotorVH>(Diff) {
 
     override fun onCreateViewHolder(p: ViewGroup, v: Int) =
-        DeviceVH(LayoutInflater.from(p.context)
+        LeftMotorVH(LayoutInflater.from(p.context)
             .inflate(R.layout.string_choice, p, false))
 
-    override fun onBindViewHolder(h: DeviceVH, pos: Int) =
+    override fun onBindViewHolder(h: LeftMotorVH, pos: Int) =
         h.bind(getItem(pos))
 
-    override fun onViewAttachedToWindow(h: DeviceVH) {
+    override fun onViewAttachedToWindow(h: LeftMotorVH) {
         super.onViewAttachedToWindow(h)
         h.select(select)
     }
@@ -43,7 +43,7 @@ class DeviceAdapter(
     }
 }
 
-class DeviceVH(view: View) : RecyclerView.ViewHolder(view) {
+class LeftMotorVH(view: View) : RecyclerView.ViewHolder(view) {
 
     private val name = view.findViewById<TextView>(R.id.string_choice)
     private var item = ""

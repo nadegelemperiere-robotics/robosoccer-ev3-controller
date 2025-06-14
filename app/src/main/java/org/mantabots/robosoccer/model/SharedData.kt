@@ -19,10 +19,13 @@ data class Settings(
     var driveReference: DriveReference,
     var device: String,
     var leftWheel: Motor,
-    var rightWheel: Motor)
+    var rightWheel: Motor,
+    var firstAttachment: Motor?,
+    var secondAttachment: Motor?
+)
 
 class SharedData : ViewModel() {
-    private val _state = MutableStateFlow(Settings(DriveMode.ARCADE, DriveReference.FIELD_CENTRIC, "", Motor.B, Motor.C))
+    private val _state = MutableStateFlow(Settings(DriveMode.ARCADE, DriveReference.FIELD_CENTRIC, "", Motor.B, Motor.C, null, null))
     val state: StateFlow<Settings> = _state.asStateFlow()
 
     fun update(new: Settings)               { _state.value = new }

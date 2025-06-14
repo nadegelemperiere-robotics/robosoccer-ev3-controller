@@ -9,12 +9,12 @@
     <string name="settings_device_subtitle">Devices</string>
     <string name="settings_device_refresh">Devices refresh</string>
     <string name="settings_device_swipe">Devices swipe</string>
-    <string name="settings_drive_subtitle">Controller Mode</string>
-    <string name="settings_drive_arcade">arcade</string>
-    <string name="settings_drive_tank">tank</string>
-    <string name="settings_drive">drive</string>
-    <string name="settings_drive_arcade_icon">arcade</string>
-    <string name="settings_drive_tank_icon">tank</string>
+    <string name="settings_mode_subtitle">Controller Mode</string>
+    <string name="settings_mode_arcade">arcade</string>
+    <string name="settings_mode_tank">tank</string>
+    <string name="settings_mode_switch">drive</string>
+    <string name="settings_mode_arcade_icon">arcade</string>
+    <string name="settings_mode_tank_icon">tank</string>
     <string name="settings_reference_subtitle">Controller Reference</string>
     <string name="settings_reference_field">field centric</string>
     <string name="settings_reference_robot">robot centric</string>
@@ -24,5 +24,7 @@
     <string name="settings_motors_subtitle">Motors</string>
     <string name="settings_motors_left">left wheel</string>
     <string name="settings_motors_right">right wheel</string>
+    <string name="settings_motors_attachment1">first attachment</string>
+    <string name="settings_motors_attachment2">second attachment</string>
     <string name="settings_save">Save</string>
 </resources>
