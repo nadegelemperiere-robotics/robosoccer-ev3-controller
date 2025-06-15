@@ -2,7 +2,7 @@
    Copyright (c) [2025] Nadege LEMPERIERE
    All rights reserved
    -------------------------------------------------------
-   Adapter to manage second attachmen motor display and selection
+   Adapter to manage first attachment motor display and selection
    ------------------------------------------------------- */
 
 package org.mantabots.robosoccer.ui.settings
@@ -21,18 +21,18 @@ import androidx.recyclerview.widget.RecyclerView
 /* Local includes */
 import org.mantabots.robosoccer.R
 
-class SecondMotorAdapter(
+class MotorAdapter(
     private val select: (String) -> Unit
-) : ListAdapter<String, SecondMotorVH>(Diff) {
+) : ListAdapter<String, MotorVH>(Diff) {
 
     override fun onCreateViewHolder(p: ViewGroup, v: Int) =
-        SecondMotorVH(LayoutInflater.from(p.context)
+        MotorVH(LayoutInflater.from(p.context)
             .inflate(R.layout.string_choice, p, false))
 
-    override fun onBindViewHolder(h: SecondMotorVH, pos: Int) =
+    override fun onBindViewHolder(h: MotorVH, pos: Int) =
         h.bind(getItem(pos))
 
-    override fun onViewAttachedToWindow(h: SecondMotorVH) {
+    override fun onViewAttachedToWindow(h: MotorVH) {
         super.onViewAttachedToWindow(h)
         h.select(select)
     }
@@ -43,7 +43,7 @@ class SecondMotorAdapter(
     }
 }
 
-class SecondMotorVH(view: View) : RecyclerView.ViewHolder(view) {
+class MotorVH(view: View) : RecyclerView.ViewHolder(view) {
 
     private val name = view.findViewById<TextView>(R.id.string_choice)
     private var item = ""
