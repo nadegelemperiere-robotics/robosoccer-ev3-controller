@@ -59,7 +59,26 @@ class Scroller<T : RecyclerView.ViewHolder>(
     }
 
     fun scroll(position: Int) {
-        mView.smoothScrollToPosition(position)
+
+        mHelper.attachToRecyclerView(null)
+
+        /* 2️⃣  Jump so the target row view exists (no animation) */
+        mView.scrollToPosition(position)
+
+        /* 3️⃣  When the layout pass finishes, compute EXACT pixel delta the helper wants
+               to centre THIS very row, and perform a tiny smoothScrollBy.               */
+        mView.post {
+            val view  = mView.layoutManager!!.findViewByPosition(position) ?: return@post
+            val delta = mHelper.calculateDistanceToFinalSnap(mView.layoutManager!!, view) ?: return@post
+            if (delta[0] != 0 || delta[1] != 0) {
+                mView.smoothScrollBy(delta[0], delta[1])
+            }
+
+            /* 4️⃣  Re-attach helper only AFTER the micro-scroll request was queued.
+                    At this point the row is mathematically centred, so helper keeps it. */
+            mHelper.attachToRecyclerView(mView)
+        }
+
     }
 
     fun selected() : String {
