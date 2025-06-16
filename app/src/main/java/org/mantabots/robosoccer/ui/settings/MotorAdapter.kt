@@ -22,19 +22,21 @@ import androidx.recyclerview.widget.RecyclerView
 import org.mantabots.robosoccer.R
 
 class MotorAdapter(
-    private val select: (String) -> Unit
+    private val name: String
 ) : ListAdapter<String, MotorVH>(Diff) {
 
-    override fun onCreateViewHolder(p: ViewGroup, v: Int) =
-        MotorVH(LayoutInflater.from(p.context)
-            .inflate(R.layout.string_choice, p, false))
+    var selected = ""
 
-    override fun onBindViewHolder(h: MotorVH, pos: Int) =
-        h.bind(getItem(pos))
+    override fun onCreateViewHolder(p: ViewGroup, v: Int): MotorVH {
+        val view = MotorVH(
+            LayoutInflater.from(p.context)
+                .inflate(R.layout.string_choice, p, false)
+        )
+        return view
+    }
 
-    override fun onViewAttachedToWindow(h: MotorVH) {
-        super.onViewAttachedToWindow(h)
-        h.select(select)
+    override fun onBindViewHolder(h: MotorVH, pos: Int) {
+        h.bind(getItem(pos), name)
     }
 
     private object Diff : DiffUtil.ItemCallback<String>() {
@@ -46,11 +48,14 @@ class MotorAdapter(
 class MotorVH(view: View) : RecyclerView.ViewHolder(view) {
 
     private val name = view.findViewById<TextView>(R.id.string_choice)
-    private var item = ""
+    internal var item = ""
+    private var details = ""
 
-    fun bind(d: String) {
-        name.text = d
-        item = d
+    fun bind(content: String, description:String) {
+        name.text = content
+        name.contentDescription = description
+        item = content
+        details = description
     }
 
     fun select(function: (String) -> Unit) {

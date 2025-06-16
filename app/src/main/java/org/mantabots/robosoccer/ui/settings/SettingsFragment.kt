@@ -23,6 +23,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.RecyclerView
+
+/* Material includes */
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 /* Kotlin includes */
 import kotlin.getValue
@@ -38,6 +42,7 @@ import org.mantabots.robosoccer.model.DriveMode
 import org.mantabots.robosoccer.model.DriveReference
 import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
+import org.mantabots.robosoccer.model.ValidationResult
 import org.mantabots.robosoccer.model.SharedData
 
 class SettingsFragment : Fragment() {
@@ -86,35 +91,46 @@ class SettingsFragment : Fragment() {
 
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         val root: View = mBinding.root
+        val context: Context = requireContext()
 
         /* Initialize EV3 devices list */
         val refreshButton : ImageButton = mBinding.settingsDeviceRefresh
         refreshButton.setOnClickListener{ refreshDevices() }
 
         mDeviceAdapter = DeviceAdapter { device -> mDevice = device }
-        mDeviceScroller = Scroller<DeviceVH>(mBinding.settingsDeviceRecycler,mDeviceAdapter,requireContext())
+        mDeviceScroller = Scroller<DeviceVH>(mBinding.settingsDeviceRecycler, mDeviceAdapter, { device -> mDevice = device }, context)
         refreshDevices()
 
         /* Initialize motors choices list */
         val motors : List<String> = Motor.entries.map(Motor::displayName)
 
-        mLeftMotorAdapter = MotorAdapter { motor -> mLeftMotor = Motor.fromString(motor) }
-        mLeftMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsLeftSelect,mLeftMotorAdapter,requireContext())
+        mLeftMotorAdapter = MotorAdapter("left")
+        mLeftMotorScroller = Scroller<MotorVH>(
+            view = mBinding.settingsMotorsLeftSelect,
+            adapter = mLeftMotorAdapter,
+            select = { motor ->
+                mLeftMotor = Motor.fromString(motor)
+                val y = mBinding.settingsMotorsLeftSelect.computeVerticalScrollOffset()
+                val m = mLeftMotorScroller.selected()
+                mBinding.settingsMotorsLeft.text = "$y px / $m / ${mLeftMotor.displayName()}"
+            },
+            context)
         mLeftMotorAdapter.submitList(motors)
 
-        mRightMotorAdapter = MotorAdapter { motor -> mRightMotor = Motor.fromString(motor) }
-        mRightMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsRightSelect,mRightMotorAdapter,requireContext())
+
+        mRightMotorAdapter = MotorAdapter("right")
+        mRightMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsRightSelect,mRightMotorAdapter,  { motor -> mRightMotor = Motor.fromString(motor) },context)
         mRightMotorAdapter.submitList(motors)
 
-        mFirstMotorAdapter = MotorAdapter { motor -> mFirstMotor = Motor.fromString(motor) }
-        mFirstMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment1Select,mFirstMotorAdapter,requireContext())
+        mFirstMotorAdapter = MotorAdapter("first")
+        mFirstMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment1Select,mFirstMotorAdapter,  { motor -> mFirstMotor = Motor.fromString(motor) },context)
         mFirstMotorAdapter.submitList(motors)
 
         mFirstMotorCheck = mBinding.settingsMotorsAttachment1Checkbox
         mFirstMotorCheck.setOnClickListener { checkFirst(mFirstMotorCheck.isChecked) }
 
-        mSecondMotorAdapter = MotorAdapter { motor -> mSecondMotor = Motor.fromString(motor) }
-        mSecondMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment2Select,mSecondMotorAdapter,requireContext())
+        mSecondMotorAdapter = MotorAdapter ("second")
+        mSecondMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment2Select,mSecondMotorAdapter, { motor -> mSecondMotor = Motor.fromString(motor) },context)
         mSecondMotorAdapter.submitList(motors)
 
         mSecondMotorCheck = mBinding.settingsMotorsAttachment2Checkbox
@@ -152,7 +168,7 @@ class SettingsFragment : Fragment() {
             mBinding.settingsMotorsAttachment1Select.visibility = View.VISIBLE
             mBinding.settingsMotorsAttachment1Checkbox.isChecked = true
             mFirstMotor = Motor.A
-            mBinding.settingsMotorsAttachment1Select.smoothScrollToPosition(mFirstMotor!!.ordinal)
+            mFirstMotorScroller.scroll(mFirstMotor!!.ordinal)
         }
         else {
             mBinding.settingsMotorsAttachment1Checkbox.isChecked = false
@@ -166,7 +182,7 @@ class SettingsFragment : Fragment() {
             mBinding.settingsMotorsAttachment2Checkbox.isChecked = true
             mBinding.settingsMotorsAttachment2Select.visibility = View.VISIBLE
             mSecondMotor = Motor.A
-            mBinding.settingsMotorsAttachment2Select.smoothScrollToPosition(mSecondMotor!!.ordinal)
+            mSecondMotorScroller.scroll(mSecondMotor!!.ordinal)
         }
         else {
             mBinding.settingsMotorsAttachment2Checkbox.isChecked = false
@@ -185,10 +201,20 @@ class SettingsFragment : Fragment() {
             firstAttachment = mFirstMotor,
             secondAttachment = mSecondMotor
         )
-        mData.update(settings)
-
-        lifecycleScope.launch { mRepository.save(settings) }
-        findNavController().popBackStack()
+        when (val res = settings.check()) {
+            ValidationResult.Ok -> {
+                mData.update(settings)
+                lifecycleScope.launch { mRepository.save(settings) }
+                findNavController().popBackStack()
+            }
+            is ValidationResult.Error -> {
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle("Invalid settings")
+                    .setMessage(res.message)
+                    .setPositiveButton(android.R.string.ok, null)
+                    .show()
+            }
+        }
     }
 
     private fun load(settings : Settings) {
