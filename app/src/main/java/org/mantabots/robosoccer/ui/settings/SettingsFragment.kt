@@ -21,15 +21,10 @@ import android.widget.Switch
 /* Androidx includes */
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.RecyclerView
 
 /* Material includes */
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-
-/* Kotlin includes */
-import kotlin.getValue
 
 /* Kotlinx includes */
 import kotlinx.coroutines.launch
@@ -43,7 +38,6 @@ import org.mantabots.robosoccer.model.DriveReference
 import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
 import org.mantabots.robosoccer.model.ValidationResult
-import org.mantabots.robosoccer.model.SharedData
 
 class SettingsFragment : Fragment() {
 
@@ -53,7 +47,6 @@ class SettingsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val mBinding get() = _binding!!
-    private val mData: SharedData by activityViewModels()
     private var mDevice = ""
     private var mLeftMotor = Motor.B
     private var mRightMotor = Motor.C
@@ -105,32 +98,23 @@ class SettingsFragment : Fragment() {
         val motors : List<String> = Motor.entries.map(Motor::displayName)
 
         mLeftMotorAdapter = MotorAdapter("left")
-        mLeftMotorScroller = Scroller<MotorVH>(
-            view = mBinding.settingsMotorsLeftSelect,
-            adapter = mLeftMotorAdapter,
-            select = { motor ->
-                mLeftMotor = Motor.fromString(motor)
-                val y = mBinding.settingsMotorsLeftSelect.computeVerticalScrollOffset()
-                val m = mLeftMotorScroller.selected()
-                mBinding.settingsMotorsLeft.text = "$y px / $m / ${mLeftMotor.displayName()}"
-            },
-            context)
+        mLeftMotorScroller = Scroller<MotorVH>( mBinding.settingsMotorsLeftSelect, mLeftMotorAdapter, { motor -> mLeftMotor = Motor.fromString(motor)}, context)
         mLeftMotorAdapter.submitList(motors)
 
 
         mRightMotorAdapter = MotorAdapter("right")
-        mRightMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsRightSelect,mRightMotorAdapter,  { motor -> mRightMotor = Motor.fromString(motor) },context)
+        mRightMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsRightSelect,mRightMotorAdapter,  { motor -> mRightMotor = Motor.fromString(motor) }, context)
         mRightMotorAdapter.submitList(motors)
 
         mFirstMotorAdapter = MotorAdapter("first")
-        mFirstMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment1Select,mFirstMotorAdapter,  { motor -> mFirstMotor = Motor.fromString(motor) },context)
+        mFirstMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment1Select,mFirstMotorAdapter,  { motor -> mFirstMotor = Motor.fromString(motor) }, context)
         mFirstMotorAdapter.submitList(motors)
 
         mFirstMotorCheck = mBinding.settingsMotorsAttachment1Checkbox
         mFirstMotorCheck.setOnClickListener { checkFirst(mFirstMotorCheck.isChecked) }
 
         mSecondMotorAdapter = MotorAdapter ("second")
-        mSecondMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment2Select,mSecondMotorAdapter, { motor -> mSecondMotor = Motor.fromString(motor) },context)
+        mSecondMotorScroller = Scroller<MotorVH>(mBinding.settingsMotorsAttachment2Select,mSecondMotorAdapter, { motor -> mSecondMotor = Motor.fromString(motor) }, context)
         mSecondMotorAdapter.submitList(motors)
 
         mSecondMotorCheck = mBinding.settingsMotorsAttachment2Checkbox
@@ -203,7 +187,6 @@ class SettingsFragment : Fragment() {
         )
         when (val res = settings.check()) {
             ValidationResult.Ok -> {
-                mData.update(settings)
                 lifecycleScope.launch { mRepository.save(settings) }
                 findNavController().popBackStack()
             }

@@ -371,7 +371,7 @@
 
         <CheckBox
             android:id="@+id/settings_motors_attachment1_checkbox"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_attachment1_divider"
@@ -380,7 +380,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/settings_motors_attachment1_select"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
             android:contentDescription="@string/settings_motors_attachment1"
@@ -432,7 +432,7 @@
 
         <CheckBox
             android:id="@+id/settings_motors_attachment2_checkbox"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_attachment2_divider"
@@ -441,7 +441,7 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/settings_motors_attachment2_select"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
             android:contentDescription="@string/settings_motors_attachment2"

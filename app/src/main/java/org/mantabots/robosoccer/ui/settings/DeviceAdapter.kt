@@ -25,16 +25,14 @@ class DeviceAdapter(
     private val select: (String) -> Unit
 ) : ListAdapter<String, DeviceVH>(Diff) {
 
-    override fun onCreateViewHolder(p: ViewGroup, v: Int) =
-        DeviceVH(LayoutInflater.from(p.context)
+    override fun onCreateViewHolder(p: ViewGroup, v: Int): DeviceVH {
+        val view = DeviceVH(LayoutInflater.from(p.context)
             .inflate(R.layout.string_choice, p, false))
+        return view
+    }
 
-    override fun onBindViewHolder(h: DeviceVH, pos: Int) =
+    override fun onBindViewHolder(h: DeviceVH, pos: Int) {
         h.bind(getItem(pos))
-
-    override fun onViewAttachedToWindow(h: DeviceVH) {
-        super.onViewAttachedToWindow(h)
-        h.select(select)
     }
 
     private object Diff : DiffUtil.ItemCallback<String>() {
@@ -51,10 +49,6 @@ class DeviceVH(view: View) : RecyclerView.ViewHolder(view) {
     fun bind(d: String) {
         name.text = d
         item = d
-    }
-
-    fun select(function: (String) -> Unit) {
-        function(item)
     }
 
 }

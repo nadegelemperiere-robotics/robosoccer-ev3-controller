@@ -7,12 +7,8 @@
 package org.mantabots.robosoccer.model
 
 /* Androidx includes */
-import androidx.lifecycle.ViewModel
 
 /* Kotlinx includes */
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 
 
 sealed interface ValidationResult {
@@ -51,19 +47,5 @@ data class Settings(
 
         return ValidationResult.Ok
     }
-}
-
-class SharedData : ViewModel() {
-    private val _state = MutableStateFlow(Settings(DriveMode.ARCADE, DriveReference.FIELD_CENTRIC, "", Motor.B, Motor.C, null, null))
-    val state: StateFlow<Settings> = _state.asStateFlow()
-
-
-
-    fun update(new: Settings)               { _state.value = new }
-    fun device(new: String)                 { _state.value.device = new}
-    fun driveMode(new: DriveMode)           { _state.value.driveMode = new}
-    fun driveReference(new: DriveReference) { _state.value.driveReference = new}
-    fun leftWheel(new: Motor)               { _state.value.leftWheel = new}
-    fun rightWheel(new: Motor)              { _state.value.rightWheel = new}
 }
 

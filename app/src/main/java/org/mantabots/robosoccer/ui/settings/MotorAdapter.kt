@@ -58,8 +58,4 @@ class MotorVH(view: View) : RecyclerView.ViewHolder(view) {
         details = description
     }
 
-    fun select(function: (String) -> Unit) {
-        function(item)
-    }
-
 }

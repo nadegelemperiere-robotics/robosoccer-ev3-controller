@@ -102,7 +102,7 @@ class SnapPositionListener(
             val pos  = lm.getPosition(view)
             if (pos != lastPos) {
                 lastPos = pos
-                onSnap(pos)                 // 👉 notify caller
+                onSnap(pos)
             }
         }
     }
