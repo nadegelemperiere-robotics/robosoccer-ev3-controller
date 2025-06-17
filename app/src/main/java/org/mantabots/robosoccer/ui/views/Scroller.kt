@@ -4,7 +4,7 @@
    -------------------------------------------------------
    Scroller smooth positioning functions
    ------------------------------------------------------- */
-package org.mantabots.robosoccer.ui.settings
+package org.mantabots.robosoccer.ui.views
 
 /* Android includes */
 import android.content.Context

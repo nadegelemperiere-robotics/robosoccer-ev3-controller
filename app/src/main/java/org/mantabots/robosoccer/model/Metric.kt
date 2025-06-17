@@ -2,7 +2,7 @@
    Copyright (c) [2025] Nadege LEMPERIERE
    All rights reserved
    -------------------------------------------------------
-   Robot drive mode options
+   Robot motors options
    ------------------------------------------------------- */
 package org.mantabots.robosoccer.model
 
@@ -13,7 +13,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
-enum class DriveMode(val text: String) : Parcelable {
-    ARCADE("Arcade"),               /* one joystick, coding for power and orientation */
-    TANK("Tank");                   /* two joysticks, controlling left and right robot wheels */
+enum class Metric(val command: Int) : Parcelable {
+    DEGREE(0x00),
+    ROTATION(0x00),
+    POWER(0x000)
 }

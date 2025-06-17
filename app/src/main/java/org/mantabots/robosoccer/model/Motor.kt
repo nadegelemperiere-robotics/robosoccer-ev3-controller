@@ -13,16 +13,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
-enum class Motor(val byte: Byte) : Parcelable {
-    A(0x01), B(0x02), C(0x04), D(0x08);
-
-    /* Helper for human-readable labels */
-    fun displayName() = when (this) {
-        A -> "A"
-        B -> "B"
-        C -> "C"
-        D -> "D"
-    }
+enum class Motor(val text:String, val command: Int, val port:Int) : Parcelable {
+    A("A",0x01,0x10), B("B",0x02,0x11), C("C",0x04,0x12), D("D",0x08,0x13);
 
     companion object {
         /**
@@ -31,7 +23,7 @@ enum class Motor(val byte: Byte) : Parcelable {
          */
         @JvmStatic
         fun fromString(text: String): Motor =
-            entries.firstOrNull { it.name.equals(text, ignoreCase = true) }
+            entries.firstOrNull { it.text.equals(text, ignoreCase = true) }
                 ?: throw IllegalArgumentException("Unknown motor: $text")
     }
 }

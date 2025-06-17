@@ -2,9 +2,9 @@
    Copyright (c) [2025] Nadege LEMPERIERE
    All rights reserved
    -------------------------------------------------------
-   Robot drive mode options
+   Ev3 message opcodes
    ------------------------------------------------------- */
-package org.mantabots.robosoccer.model
+package org.mantabots.robosoccer.ev3
 
 /* Android import */
 import android.os.Parcelable
@@ -13,7 +13,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
-enum class DriveMode(val text: String) : Parcelable {
-    ARCADE("Arcade"),               /* one joystick, coding for power and orientation */
-    TANK("Tank");                   /* two joysticks, controlling left and right robot wheels */
+enum class Ev3LCCode(val code: Int) : Parcelable {
+    LC1(0x81),
+    LC2(0x82),
+    LCS(0x84);
 }

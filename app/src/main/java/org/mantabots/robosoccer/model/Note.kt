@@ -2,7 +2,7 @@
    Copyright (c) [2025] Nadege LEMPERIERE
    All rights reserved
    -------------------------------------------------------
-   Robot drive mode options
+   Music note enum
    ------------------------------------------------------- */
 package org.mantabots.robosoccer.model
 
@@ -13,7 +13,16 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
-enum class DriveMode(val text: String) : Parcelable {
-    ARCADE("Arcade"),               /* one joystick, coding for power and orientation */
-    TANK("Tank");                   /* two joysticks, controlling left and right robot wheels */
+enum class Note(val byte1: Byte, val byte2: Byte) : Parcelable {
+    C(0x06, 0x01),
+    CSHARP(0x15, 0x01),
+    D(0x26, 0x01),
+    DSHARP(0x37, 0x01),
+    E(0x4A, 0x01),
+    F(0x5D, 0x01),
+    G(0x88.toByte(), 0x01),
+    GSHARP(0x9F.toByte(), 0x01),
+    A (0xB8.toByte(), 0x01),
+    ASHARP(0xD2.toByte(), 0x01),
+    B(0xEE.toByte(), 0x01);
 }

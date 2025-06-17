@@ -134,7 +134,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <org.mantabots.robosoccer.ui.joystick.JoystickView
+                <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_tank_joystick_left"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
@@ -160,7 +160,7 @@
                     app:layout_constraintRight_toLeftOf="@+id/controller_tank_joystick_right"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <org.mantabots.robosoccer.ui.joystick.JoystickView
+                <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_tank_joystick_right"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
@@ -201,7 +201,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <org.mantabots.robosoccer.ui.joystick.JoystickView
+                <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_arcade_joystick"
                     android:layout_width="200dp"
                     android:layout_height="200dp"
@@ -253,7 +253,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_max="100dp">
 
-                <org.mantabots.robosoccer.ui.joystick.JoystickView
+                <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_attachment1_joystick"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -292,7 +292,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/controller_attachment1"
                 app:layout_constraintWidth_max="100dp">
 
-                <org.mantabots.robosoccer.ui.joystick.JoystickView
+                <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_attachment2_joystick"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"

@@ -4,7 +4,7 @@
     <selectionStates>
       <SelectionState runConfigName="robosoccer">
         <option name="selectionMode" value="DROPDOWN" />
-        <DropdownSelection timestamp="2025-06-13T20:47:12.368777Z">
+        <DropdownSelection timestamp="2025-06-17T02:13:56.466222Z">
           <Target type="DEFAULT_BOOT">
             <handle>
               <DeviceId pluginId="PhysicalDevice" identifier="serial=ZY2252H4CM" />

@@ -4,11 +4,12 @@
    -------------------------------------------------------
    EV3 controller service
    ------------------------------------------------------- */
-package org.mantabots.robosoccer.repository
+package org.mantabots.robosoccer.ev3
 
 /* System includes */
 import java.util.UUID
 import java.io.IOException
+import java.io.Closeable
 
 /* Android includes */
 import android.bluetooth.BluetoothAdapter
@@ -24,7 +25,7 @@ import androidx.core.content.ContextCompat
 
 /* Kotlinx includes */
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.coroutines.withContext
@@ -34,7 +35,7 @@ import org.mantabots.robosoccer.model.Motor
 
 /** Ev3Service.kt – keeps the socket alive **/
 @Suppress("DEPRECATION")
-class Ev3Service()  {
+class Ev3Service() : Closeable {
 
     private var mDevice = ""
     private var mSocket: BluetoothSocket? = null
@@ -124,63 +125,58 @@ class Ev3Service()  {
 
     suspend fun disconnect() = withContext(Dispatchers.IO) {
         mMutex.withLock {
-            mSocket?.runCatching { close() }
+            if(mSocket?.isConnected == true) { mSocket?.runCatching { close() } }
             mSocket = null
-            delay(150)
         }
     }
 
 
     /** Set raw power (-100…100) on one output port. */
-    suspend fun motorPower(port: Motor, power: Int) =
-        sendDirectNoReply(
-            byteArrayOf(
-                0xA4.toByte(),      // opOUTPUT_POWER (correct opcode)
-                0x00,               // layer 0
-                port.byte,          // port bit field
-                power.toByte()      // signed power
-            )
-        )
+    suspend fun power(motor: Motor, power: Float) {
+
+        val message = Ev3Message(mCounter,true)
+        mCounter ++
+
+        message.addCode(Ev3OpCode.OUTPUT_SPEED)
+        message.addLC0(0)
+        message.addLC0(motor.command.toByte())
+        message.addLC1((power*100).toInt().toByte())
+        message.addCode(Ev3OpCode.OUTPUT_START)
+        message.addLC0(0)
+        message.addLC0(motor.command.toByte())
+
+        val reply = send(message.get(),true)
+        println(reply)
+    }
 
     /** Read raw value from an analog sensor (example: EV3-Ultrasonic). */
-    suspend fun readSensor(port: Motor): Int {
-        val reply = sendDirectWithReply(
+    suspend fun readSensor(motor: Motor): Int {
+        val reply = send(
             byteArrayOf(
                 0x9A.toByte(),      // opINPUT_DEVICE
                 0x00,               // sub-command: GET_RAW
-                port.byte,
+                motor.port.toByte(),
                 0x00,               // handle = 0
                 0x01                // expected length = 1 byte
-            )
+            ), true
         )
         return reply.getOrNull(5)?.toInt()?.and(0xFF)
             ?: throw IOException("Invalid reply length")
     }
-    private suspend fun sendDirectNoReply(body: ByteArray) =
-        send(0x80.toByte(), body, expectReply = false)
 
-    private suspend fun sendDirectWithReply(body: ByteArray): ByteArray =
-        send(0x00.toByte(), body, expectReply = true)
+    override fun close() {
+        runBlocking { disconnect() }
+    }
 
     /** Builds LEGO-EV3 Direct-Command frame: [lenLo lenHi counterLo counterHi type …body]. */
     private suspend fun send(
-        msgType: Byte,
-        body: ByteArray,
+        message: ByteArray,
         expectReply: Boolean
     ): ByteArray = withContext(Dispatchers.IO) {
 
-        val id      = mCounter++
-        val length  = body.size + 3                    // type + 2-byte counter
-        val header  = byteArrayOf(
-            (length and 0xFF).toByte(),
-            (length shr 8).toByte(),
-            (id and 0xFF).toByte(),
-            (id shr 8).toByte(),
-            msgType
-        )
-
         mSocket?.let { s ->
-            s.outputStream.write(header + body)
+            s.outputStream.write(message)
+            s.outputStream.flush()
 
             if (!expectReply) return@withContext ByteArray(0)
 

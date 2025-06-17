@@ -41,7 +41,7 @@ data class Settings(
 
         val dupes = motors.groupingBy { it }.eachCount().filterValues { it > 1 }.keys
         if (dupes.isNotEmpty()) {
-            val list = dupes.joinToString { it.displayName() }
+            val list = dupes.joinToString { it.text }
             return ValidationResult.Error("Motor(s) $list are selected twice.")
         }
 
