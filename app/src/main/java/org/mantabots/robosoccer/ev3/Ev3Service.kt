@@ -41,6 +41,7 @@ class Ev3Service() : Closeable {
     private var mSocket: BluetoothSocket? = null
     private var mCounter = 0
     private val mMutex = Mutex()
+    private var mConnected = false
 
     companion object {
 
@@ -93,12 +94,12 @@ class Ev3Service() : Closeable {
     @SuppressLint("MissingPermission")
     suspend fun connect(context: Context, device: String):Boolean = withContext(Dispatchers.IO) {
 
-        var result = false
+        mConnected = false
 
-        if((device == mDevice) && (mSocket?.isConnected == true)) { result = true }
+        if((device == mDevice) && (mSocket?.isConnected == true)) { mConnected = true }
         else {
 
-            result = false
+            mConnected = false
 
             if (mSocket != null) { disconnect() }
 
@@ -111,15 +112,16 @@ class Ev3Service() : Closeable {
                 mMutex.withLock {
                     try {
                         mSocket?.connect()
-                        result = true
+                        mConnected = true
                         mDevice = device
                     } catch (_: IOException) {
-                        result = false
+                        mConnected = false
                     }
                 }
             }
         }
 
+        val result = mConnected
         result
     }
 
@@ -127,6 +129,7 @@ class Ev3Service() : Closeable {
         mMutex.withLock {
             if(mSocket?.isConnected == true) { mSocket?.runCatching { close() } }
             mSocket = null
+            mConnected = false
         }
     }
 
@@ -175,24 +178,31 @@ class Ev3Service() : Closeable {
         expectReply: Boolean
     ): ByteArray = withContext(Dispatchers.IO) {
 
-        mSocket?.let { s ->
-            s.outputStream.write(message)
-            s.outputStream.flush()
+        var result: ByteArray = byteArrayOf(0)
 
-            if (!expectReply) return@withContext ByteArray(0)
+        if ((mSocket != null) && mConnected) {
 
-            /* ---- read reply (2-byte length prefix) ---- */
-            val lenLo = s.inputStream.read()
-            val lenHi = s.inputStream.read()
-            if (lenLo < 0 || lenHi < 0) throw IOException("EV3 closed connection")
+            mSocket?.let { s ->
+                s.outputStream.write(message)
+                s.outputStream.flush()
 
-            val len = lenLo or (lenHi shl 8)
-            val result = ByteArray(len + 2)
-            result[0] = lenLo.toByte()
-            result[1] = lenHi.toByte()
-            s.inputStream.read(result,2,len)
-            result
-        } ?: throw IllegalStateException("Socket is null / not connected")
+                if (!expectReply) return@withContext ByteArray(0)
+
+                /* ---- read reply (2-byte length prefix) ---- */
+                val lenLo = s.inputStream.read()
+                val lenHi = s.inputStream.read()
+                if (lenLo < 0 || lenHi < 0) throw IOException("EV3 closed connection")
+
+                val len = lenLo or (lenHi shl 8)
+                result = ByteArray(len + 2)
+                result[0] = lenLo.toByte()
+                result[1] = lenHi.toByte()
+                s.inputStream.read(result, 2, len)
+                result
+            }
+        }
+
+        result
     }
 
 }

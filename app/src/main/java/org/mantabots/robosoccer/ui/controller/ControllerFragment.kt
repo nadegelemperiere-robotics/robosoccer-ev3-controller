@@ -58,6 +58,8 @@ class ControllerFragment : Fragment() {
 
     private val mShared: SharedData by activityViewModels()
 
+    private val sArcadeAngleRatio = 0.25
+
     private lateinit var mRepository: SettingsRepository
     private lateinit var mConnect: ImageView
     private lateinit var mMode: ImageView
@@ -250,7 +252,7 @@ class ControllerFragment : Fragment() {
 
             mLeftJob?.cancel()
             mRightJob?.cancel()
-            val speeds = computeMotorSpeeds(angle, strength)
+            val speeds = computeArcadeMotorSpeeds(angle, strength)
             if(left != null) {
                 mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
@@ -319,13 +321,13 @@ class ControllerFragment : Fragment() {
         }
     }
 
-    private fun computeMotorSpeeds(angle:Int, strength:Int): Pair<Float, Float> {
+    private fun computeArcadeMotorSpeeds(angle:Int, strength:Int): Pair<Float, Float> {
 
         var result = Pair<Float,Float>(0.0f,0.0f)
 
         val rad = transformAngle(angle)
-        val y =  strength.toFloat() / 100 * cos(rad)      // forward/back
-        val x =  strength.toFloat() / 100 * sin(rad)
+        val y =  strength.toFloat() / 100 * cos(rad)
+        val x =  strength.toFloat() / 100 * sin(rad) * sArcadeAngleRatio.toFloat()
         var left  = y + x
         var right = y - x
         // scale so |power| ≤ 1
