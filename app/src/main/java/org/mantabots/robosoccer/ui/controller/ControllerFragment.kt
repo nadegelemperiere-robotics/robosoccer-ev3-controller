@@ -29,6 +29,7 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import okio.IOException
 
 /* Local includes */
 import org.mantabots.robosoccer.R
@@ -129,14 +130,20 @@ class ControllerFragment : Fragment() {
             mBinding.controllerTankJoystickLeft.setOnMoveListener { _, strength ->
                 mLeftJob?.cancel()
                 mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    mShared.state.value.power(settings.leftWheel, strength.toFloat() / 100)
+                    try {
+                        mShared.state.value.power(settings.leftWheel, strength.toFloat() / 100)
+                    }
+                    catch(_ : IOException) {}
                 }
             }
 
             mBinding.controllerTankJoystickRight.setOnMoveListener { _, strength ->
                 mRightJob?.cancel()
                 mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    mShared.state.value.power(settings.rightWheel, strength.toFloat() / 100)
+                    try {
+                        mShared.state.value.power(settings.rightWheel, strength.toFloat() / 100)
+                    }
+                    catch(_ : IOException) {}
                 }
             }
         }

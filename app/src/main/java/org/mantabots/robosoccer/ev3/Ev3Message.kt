@@ -22,8 +22,8 @@ class Ev3Message(id: Int, reply: Boolean)
     init {
         mMessage.add(((mLength - 2) and 0x00FF).toByte())
         mMessage.add((((mLength - 2) and 0xFF00) shr 8).toByte())
-        mMessage.add(((id - 2) and 0x00FF).toByte())
-        mMessage.add((((id - 2) and 0xFF00) shr 8).toByte())
+        mMessage.add(((id) and 0x00FF).toByte())
+        mMessage.add((((id) and 0xFF00) shr 8).toByte())
         if(reply) { mMessage.add(sDirectCommandReply.toByte()) }
         else { mMessage.add(sDirectCommandNoReply.toByte()) }
         if(reply) { mMessage.add(sReplySize.toByte()) }

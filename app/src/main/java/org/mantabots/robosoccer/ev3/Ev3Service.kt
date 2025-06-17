@@ -135,7 +135,6 @@ class Ev3Service() : Closeable {
     suspend fun power(motor: Motor, power: Float) {
 
         val message = Ev3Message(mCounter,true)
-        mCounter ++
 
         message.addCode(Ev3OpCode.OUTPUT_SPEED)
         message.addLC0(0)
@@ -145,8 +144,10 @@ class Ev3Service() : Closeable {
         message.addLC0(0)
         message.addLC0(motor.command.toByte())
 
-        val reply = send(message.get(),true)
-        println(reply)
+        val reply = Ev3Reply(mCounter, send(message.get(),true))
+        if(!reply.isStatusOK()) { throw IOException("Motor starting failed") }
+
+        mCounter ++
     }
 
     /** Read raw value from an analog sensor (example: EV3-Ultrasonic). */
@@ -186,7 +187,11 @@ class Ev3Service() : Closeable {
             if (lenLo < 0 || lenHi < 0) throw IOException("EV3 closed connection")
 
             val len = lenLo or (lenHi shl 8)
-            ByteArray(len).also { s.inputStream.read(it) }
+            val result = ByteArray(len + 2)
+            result[0] = lenLo.toByte()
+            result[1] = lenHi.toByte()
+            s.inputStream.read(result,2,len)
+            result
         } ?: throw IllegalStateException("Socket is null / not connected")
     }
 
