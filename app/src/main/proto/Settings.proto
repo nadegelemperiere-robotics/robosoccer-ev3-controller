@@ -11,11 +11,6 @@ enum DriveModeProto {
   TANK   = 1;
 }
 
-enum DriveReferenceProto {
-  ROBOT_CENTRIC = 0;
-  FIELD_CENTRIC = 1;
-}
-
 enum MotorProto {
   A = 0;
   B = 1;
@@ -26,10 +21,9 @@ enum MotorProto {
 
 message SettingsProto {
   DriveModeProto      mode      = 1;
-  DriveReferenceProto reference = 2;
-  string              device    = 3;
-  MotorProto          left      = 4;
-  MotorProto          right     = 5;
-  MotorProto          first     = 6;
-  MotorProto          second    = 7;
+  string              device    = 2;
+  MotorProto          left      = 3;
+  MotorProto          right     = 4;
+  MotorProto          first     = 5;
+  MotorProto          second    = 6;
 }

@@ -25,8 +25,6 @@ class MotorAdapter(
     private val name: String
 ) : ListAdapter<String, MotorVH>(Diff) {
 
-    var selected = ""
-
     override fun onCreateViewHolder(p: ViewGroup, v: Int): MotorVH {
         val view = MotorVH(
             LayoutInflater.from(p.context)

@@ -23,12 +23,10 @@ import kotlinx.coroutines.flow.map
 
 /* Local includes */
 import org.mantabots.robosoccer.model.DriveMode
-import org.mantabots.robosoccer.model.DriveReference
 import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
 
 import org.mantabots.robosoccer.proto.DriveModeProto
-import org.mantabots.robosoccer.proto.DriveReferenceProto
 import org.mantabots.robosoccer.proto.MotorProto
 import org.mantabots.robosoccer.proto.SettingsProto
 
@@ -38,8 +36,11 @@ object SettingsSerializer : Serializer<SettingsProto> {
     override val defaultValue = SettingsProto
         .newBuilder()
         .setModeValue(DriveModeProto.ARCADE.number)
-        .setReferenceValue(DriveReferenceProto.ROBOT_CENTRIC.number)
         .setDevice("")
+        .setLeft(MotorProto.B)
+        .setRight(MotorProto.C)
+        .setSecond(MotorProto.UNDEFINED)
+        .setFirst(MotorProto.UNDEFINED)
         .build()!!
 
     override suspend fun readFrom(input: InputStream) =
@@ -67,11 +68,6 @@ class SettingsRepository(private val context: Context) {
                 DriveModeProto.ARCADE -> DriveMode.ARCADE
                 DriveModeProto.UNRECOGNIZED -> DriveMode.ARCADE
             },
-            driveReference = when (proto.reference) {
-                DriveReferenceProto.ROBOT_CENTRIC -> DriveReference.ROBOT_CENTRIC
-                DriveReferenceProto.FIELD_CENTRIC -> DriveReference.FIELD_CENTRIC
-                DriveReferenceProto.UNRECOGNIZED -> DriveReference.FIELD_CENTRIC
-            },
             device = proto.device,
             leftWheel = when (proto.left) {
                 MotorProto.A -> Motor.A
@@ -87,7 +83,7 @@ class SettingsRepository(private val context: Context) {
                 MotorProto.C -> Motor.C
                 MotorProto.D -> Motor.D
                 MotorProto.UNRECOGNIZED -> Motor.C
-                MotorProto.UNDEFINED -> Motor.B
+                MotorProto.UNDEFINED -> Motor.C
             },
             firstAttachment = when (proto.first) {
                 MotorProto.A -> Motor.A
@@ -114,10 +110,6 @@ class SettingsRepository(private val context: Context) {
                 .setModeValue(
                     if (new.driveMode == DriveMode.TANK) DriveModeProto.TANK.number
                     else DriveModeProto.ARCADE.number
-                )
-                .setReferenceValue(
-                    if (new.driveReference == DriveReference.ROBOT_CENTRIC) DriveReferenceProto.ROBOT_CENTRIC.number
-                    else DriveReferenceProto.FIELD_CENTRIC.number
                 )
                 .setDevice(new.device)
                 .setLeftValue(

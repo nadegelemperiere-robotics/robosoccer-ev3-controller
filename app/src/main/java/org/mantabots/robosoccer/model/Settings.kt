@@ -18,7 +18,6 @@ sealed interface ValidationResult {
 
 data class Settings(
     var driveMode: DriveMode,
-    var driveReference: DriveReference,
     var device: String,
     var leftWheel: Motor,
     var rightWheel: Motor,

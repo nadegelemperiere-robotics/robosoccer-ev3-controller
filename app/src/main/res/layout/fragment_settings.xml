@@ -154,86 +154,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_mode_container" />
-
-    <TextView
-        android:id="@+id/settings_reference_subtitle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/lines_margin"
-        android:text="@string/settings_reference_subtitle"
-        android:textAlignment="center"
-        android:textSize="@dimen/font_size"
-        android:textStyle="bold"
-        android:gravity="center"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_mode_container" />
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_reference_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/lines_height"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_reference_subtitle">
-
-        <TextView
-            android:id="@+id/settings_reference_field"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/lines_margin"
-            android:padding="@dimen/lines_margin"
-            android:text="@string/settings_reference_field"
-            android:textAlignment="viewStart"
-            android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/settings_reference_switch"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Switch
-            android:id="@+id/settings_reference_switch"
-            android:layout_width="50dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/lines_margin"
-            android:textAlignment="center"
-            android:textSize="@dimen/font_size"
-            android:gravity="center"
-            app:layout_constraintBaseline_toBaselineOf="@+id/settings_reference_field"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/settings_reference_robot"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/lines_margin"
-            android:padding="@dimen/lines_margin"
-            android:text="@string/settings_reference_robot"
-            android:textAlignment="viewEnd"
-            android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
-            app:layout_constraintBaseline_toBaselineOf="@+id/settings_reference_field"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/settings_reference_switch"
-            app:layout_constraintTop_toTopOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <View
-        android:id="@+id/settings_reference_divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_reference_container" />
-
+    
     <TextView
         android:id="@+id/settings_motors_subtitle"
         android:layout_width="match_parent"
@@ -246,7 +167,7 @@
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_reference_divider" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_mode_divider" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/settings_motors_wheels_container"

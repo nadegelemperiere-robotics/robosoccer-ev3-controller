@@ -34,7 +34,6 @@ import org.mantabots.robosoccer.databinding.FragmentSettingsBinding
 import org.mantabots.robosoccer.ev3.Ev3Service
 import org.mantabots.robosoccer.repository.SettingsRepository
 import org.mantabots.robosoccer.model.DriveMode
-import org.mantabots.robosoccer.model.DriveReference
 import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
 import org.mantabots.robosoccer.model.ValidationResult
@@ -58,7 +57,6 @@ class SettingsFragment : Fragment() {
     private lateinit var mRepository: SettingsRepository
     private lateinit var mSaveButton: Button
     private lateinit var mModeSwitch: Switch
-    private lateinit var mReferenceSwitch: Switch
     private lateinit var mDeviceAdapter: DeviceAdapter
     private lateinit var mDeviceScroller: Scroller<DeviceVH>
     private lateinit var mLeftMotorAdapter: MotorAdapter
@@ -153,7 +151,6 @@ class SettingsFragment : Fragment() {
 
         /* Restore previous configuration */
         mModeSwitch = mBinding.settingsModeSwitch
-        mReferenceSwitch = mBinding.settingsReferenceSwitch
 
         lifecycleScope.launchWhenStarted {
             mRepository.settings.collect { load(it) }
@@ -204,7 +201,6 @@ class SettingsFragment : Fragment() {
     private fun save() {
         val settings = Settings(
             driveMode = if (mModeSwitch.isChecked) DriveMode.TANK else DriveMode.ARCADE,
-            driveReference = if (mReferenceSwitch.isChecked) DriveReference.ROBOT_CENTRIC else DriveReference.FIELD_CENTRIC,
             device = mDevice,
             leftWheel = mLeftMotor,
             rightWheel = mRightMotor,
@@ -229,7 +225,6 @@ class SettingsFragment : Fragment() {
     private fun load(settings : Settings) {
 
         mModeSwitch.isChecked = (settings.driveMode == DriveMode.TANK)
-        mReferenceSwitch.isChecked = (settings.driveReference == DriveReference.ROBOT_CENTRIC)
 
         mDevice = settings.device
         var position = mDeviceAdapter.currentList.indexOf(mDevice)
