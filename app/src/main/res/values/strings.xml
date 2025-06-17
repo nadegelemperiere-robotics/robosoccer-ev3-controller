@@ -3,6 +3,7 @@
     <string name="controller_title">CONTROLLER</string>
     <string name="controller_status_mode">Mode</string>
     <string name="controller_status_reference">Reference</string>
+    <string name="controller_status_connect">Device</string>
     <string name="controller_status_mode_icon">Mode</string>
     <string name="controller_status_reference_icon">Reference</string>
     <string name="settings_title">SETTINGS</string>

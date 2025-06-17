@@ -13,11 +13,8 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
-enum class Motor : Parcelable {
-    A,
-    B,
-    C,
-    D;
+enum class Motor(val byte: Byte) : Parcelable {
+    A(0x01), B(0x02), C(0x04), D(0x08);
 
     /* Helper for human-readable labels */
     fun displayName() = when (this) {

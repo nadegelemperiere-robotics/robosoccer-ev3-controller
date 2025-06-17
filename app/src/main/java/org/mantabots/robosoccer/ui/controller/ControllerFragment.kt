@@ -6,6 +6,9 @@
    ------------------------------------------------------- */
 package org.mantabots.robosoccer.ui.controller
 
+/* Java includes */
+import java.io.IOException
+
 /* Android includes */
 import android.annotation.SuppressLint
 import android.content.Context
@@ -15,12 +18,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.core.content.ContextCompat
+import android.widget.Toast
 
 /* Androidx includes */
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
+
+/* Kotlinx includes */
+import kotlinx.coroutines.launch
 
 /* Local includes */
 import org.mantabots.robosoccer.R
@@ -28,7 +36,9 @@ import org.mantabots.robosoccer.databinding.FragmentControllerBinding
 import org.mantabots.robosoccer.model.DriveReference
 import org.mantabots.robosoccer.model.DriveMode
 import org.mantabots.robosoccer.model.Settings
+import org.mantabots.robosoccer.repository.Ev3Service
 import org.mantabots.robosoccer.repository.SettingsRepository
+import org.mantabots.robosoccer.repository.SharedData
 
 class ControllerFragment : Fragment() {
 
@@ -38,7 +48,12 @@ class ControllerFragment : Fragment() {
     // onDestroyView.
     private val mBinding get() = _binding!!
 
+    private val mShared: SharedData by activityViewModels()
+
+    private lateinit var mEv3: Ev3Service
+
     private lateinit var mRepository: SettingsRepository
+    private lateinit var mConnect : ImageView
     private lateinit var mMode : ImageView
     private lateinit var mReference : ImageView
     private lateinit var mArcade : ConstraintLayout 
@@ -64,11 +79,11 @@ class ControllerFragment : Fragment() {
 
         mMode = mBinding.controllerStatusModeIcon
         mReference = mBinding.controllerStatusReferenceIcon
+        mConnect = mBinding.controllerStatusConnectIcon
 
         lifecycleScope.launchWhenStarted {
             mRepository.settings.collect { load(it) }
         }
-
 
         return root
     }
@@ -86,8 +101,7 @@ class ControllerFragment : Fragment() {
             mMode.setImageDrawable(arcade)
             mArcade.visibility = View.VISIBLE
             mTank.visibility = View.GONE
-            mBinding.controllerArcadeJoystickText.text = "${settings.leftWheel} / ${settings.rightWheel}"
-
+            mBinding.controllerArcadeJoystickText.text = "${settings.leftWheel.displayName()} / ${settings.rightWheel.displayName()}"
         }
         else if (settings.driveMode == DriveMode.TANK) {
             val tank: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_tank_teal_24dp)
@@ -96,7 +110,6 @@ class ControllerFragment : Fragment() {
             mTank.visibility = View.VISIBLE
             mBinding.controllerTankJoystickLeftText.text = settings.leftWheel.displayName()
             mBinding.controllerTankJoystickRightText.text = settings.rightWheel.displayName()
-
         }
 
         if (settings.driveReference == DriveReference.FIELD_CENTRIC) {
@@ -131,8 +144,22 @@ class ControllerFragment : Fragment() {
             mBinding.controllerAttachment2.visibility = View.GONE
         }
 
+        val waiting: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_waiting_teal_24dp)
+        mConnect.setImageDrawable(waiting)
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            val isConnected = mShared.state.value.connect(requireContext(), settings.device)
+            if(isConnected) {
+                Toast.makeText(requireContext(), "EV3 connected!", Toast.LENGTH_SHORT).show()
+                val connected: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_wireless_green_24dp)
+                mConnect.setImageDrawable(connected)
+            } else {
+                Toast.makeText(requireContext(), "EV3 connection failed", Toast.LENGTH_LONG).show()
+                val error: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_wireless_red_24dp)
+                mConnect.setImageDrawable(error)
+            }
 
+        }
     }
 //
 //     override fun onViewCreated(view: View, savedInstanceState: Bundle?) = with(view) {

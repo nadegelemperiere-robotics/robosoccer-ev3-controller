@@ -21,6 +21,7 @@ import android.widget.Switch
 /* Androidx includes */
 import androidx.lifecycle.lifecycleScope
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 
 /* Material includes */
@@ -38,6 +39,8 @@ import org.mantabots.robosoccer.model.DriveReference
 import org.mantabots.robosoccer.model.Motor
 import org.mantabots.robosoccer.model.Settings
 import org.mantabots.robosoccer.model.ValidationResult
+import org.mantabots.robosoccer.repository.SharedData
+import kotlin.getValue
 
 class SettingsFragment : Fragment() {
 
@@ -47,6 +50,7 @@ class SettingsFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val mBinding get() = _binding!!
+
     private var mDevice = ""
     private var mLeftMotor = Motor.B
     private var mRightMotor = Motor.C
@@ -142,8 +146,7 @@ class SettingsFragment : Fragment() {
 
     private fun refreshDevices() {
         val ctx = requireContext()
-        val ev3 = Ev3Service(ctx)
-        val devices = ev3.listPaired()
+        val devices = Ev3Service.listPaired(ctx)
         mDeviceAdapter.submitList(devices)
     }
 
