@@ -66,6 +66,8 @@ class ControllerFragment : Fragment() {
     private lateinit var mArcade: ConstraintLayout
     private lateinit var mTank: ConstraintLayout
 
+    private var mDevice = ""
+
     private var mLeftMotor: Motor? = null
     private var mLeftJob: Job? = null
     private var mRightMotor: Motor? = null
@@ -158,12 +160,13 @@ class ControllerFragment : Fragment() {
         mRightMotor = settings.rightWheel
         mFirstMotor = settings.firstAttachment
         mSecondMotor = settings.secondAttachment
+        mDevice = settings.device
 
         // Configure joysticks
         if (settings.driveMode == DriveMode.ARCADE) { configureArcade(mLeftMotor, mRightMotor)  }
         else if (settings.driveMode == DriveMode.TANK) { configureTank(mLeftMotor, mRightMotor) }
 
-        if ((settings.secondAttachment == null) && (settings.firstAttachment == null)) {
+        if ((mSecondMotor == null) && (mFirstMotor == null)) {
             mBinding.controllerAttachments.visibility = View.GONE
         } else {
             mBinding.controllerAttachments.visibility = View.VISIBLE
@@ -176,9 +179,19 @@ class ControllerFragment : Fragment() {
         val waiting: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_waiting_teal_24dp)
         mConnect.setImageDrawable(waiting)
 
-        if (settings.device != "") {
+        mBinding.controllerRetryButton.setOnClickListener{ deviceConnection(mDevice) }
+        deviceConnection(mDevice)
+
+    }
+
+    private fun deviceConnection(device:String) {
+        if(device != "") {
+
+            val waiting: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_waiting_teal_24dp)
+            mConnect.setImageDrawable(waiting)
+
             viewLifecycleOwner.lifecycleScope.launch {
-                val isConnected = mShared.state.value.connect(requireContext(), settings.device)
+                val isConnected = mShared.state.value.connect(requireContext(), device)
                 if (isConnected) {
                     Toast.makeText(requireContext(), "EV3 connected!", Toast.LENGTH_SHORT).show()
                     val connected: Drawable? =
@@ -194,7 +207,6 @@ class ControllerFragment : Fragment() {
                         ContextCompat.getDrawable(requireContext(), R.drawable.ic_wireless_red_24dp)
                     mConnect.setImageDrawable(error)
                 }
-
             }
         }
 

@@ -14,8 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/controller_status"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/lines_margin"
+        android:layout_height="@dimen/small_lines_height"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,9 +26,9 @@
             android:layout_margin="@dimen/lines_margin"
             android:text="@string/controller_status_connect"
             android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/controller_status_connect_icon"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -37,10 +36,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:contentDescription="@string/controller_status_mode_icon"
+            android:contentDescription="@string/controller_status_connect_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/controller_status_mode_text"
-            app:layout_constraintStart_toEndOf="@+id/controller_status_connect_text"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
@@ -50,9 +48,9 @@
             android:layout_margin="@dimen/lines_margin"
             android:text="@string/controller_status_mode"
             android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/controller_status_mode_icon"
-            app:layout_constraintStart_toEndOf="@+id/controller_status_connect_icon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -63,7 +61,6 @@
             android:contentDescription="@string/controller_status_mode_icon"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/controller_status_mode_text"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -81,6 +78,7 @@
         android:id="@+id/controller_motors"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_margin="@dimen/lines_margin"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_status_divider"
         app:layout_constraintEnd_toEndOf="parent"
@@ -89,12 +87,41 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/controller_wheels"
+            android:id="@+id/controller_retry"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/controller_wheels"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/controller_wheels">
+
+            <ImageButton
+                android:id="@+id/controller_retry_button"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_margin="@dimen/lines_margin"
+                android:backgroundTint="@color/teal_dark"
+                android:contentDescription="@string/settings_device_refresh"
+                android:elevation="3dp"
+                android:src="@drawable/ic_refresh_white_24dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/controller_wheels"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/controller_retry"
             app:layout_constraintEnd_toStartOf="@+id/controller_attachments"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/controller_attachments">
@@ -113,8 +140,8 @@
 
                 <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_tank_joystick_left"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="@dimen/motor_joystick"
+                    android:layout_height="@dimen/motor_joystick"
                     android:layout_margin="@dimen/lines_margin"
                     app:JV_borderColor="@color/teal_medium"
                     app:JV_buttonColor="@color/teal_dark"
@@ -139,8 +166,8 @@
 
                 <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_tank_joystick_right"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="@dimen/motor_joystick"
+                    android:layout_height="@dimen/motor_joystick"
                     android:layout_margin="@dimen/lines_margin"
                     app:JV_borderColor="@color/teal_medium"
                     app:JV_buttonColor="@color/teal_dark"
@@ -180,8 +207,8 @@
 
                 <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_arcade_joystick"
-                    android:layout_width="200dp"
-                    android:layout_height="200dp"
+                    android:layout_width="@dimen/motor_joystick"
+                    android:layout_height="@dimen/motor_joystick"
                     android:layout_margin="@dimen/lines_margin"
                     app:JV_borderColor="@color/teal_medium"
                     app:JV_buttonColor="@color/teal_dark"
@@ -224,11 +251,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/controller_attachment2"
-                app:layout_constraintHeight_max="100dp"
+                app:layout_constraintHeight_max="@dimen/attachments_joystick"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="100dp">
+                app:layout_constraintWidth_max="@dimen/attachments_joystick">
 
                 <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_attachment1_joystick"
@@ -263,11 +290,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_max="100dp"
+                app:layout_constraintHeight_max="@dimen/attachments_joystick"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/controller_attachment1"
-                app:layout_constraintWidth_max="100dp">
+                app:layout_constraintWidth_max="@dimen/attachments_joystick">
 
                 <org.mantabots.robosoccer.ui.views.JoystickView
                     android:id="@+id/controller_attachment2_joystick"
