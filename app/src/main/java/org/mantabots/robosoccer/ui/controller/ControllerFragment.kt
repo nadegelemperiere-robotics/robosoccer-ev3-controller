@@ -224,26 +224,22 @@ class ControllerFragment : Fragment() {
 
         if(left != null) {
 
-            mBinding.controllerTankJoystickLeft.setOnMoveListener { angle, strength ->
+            mBinding.controllerTankJoystickLeft.setOnMoveListener { strength ->
                 mLeftJob?.cancel()
-                val rad = transformAngle(angle)
-                val sign = cos(rad) / max(abs(cos(rad)),0.00001.toFloat())
                 mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(left, (sign * strength).toFloat() / 100)
+                        mShared.state.value.power(left, strength.toFloat() / 100)
                     } catch (_: IOException) { }
                 }
             }
         }
 
         if(right != null) {
-            mBinding.controllerTankJoystickRight.setOnMoveListener { angle, strength ->
+            mBinding.controllerTankJoystickRight.setOnMoveListener {  strength ->
                 mRightJob?.cancel()
-                val rad = transformAngle(angle)
-                val sign = cos(rad) / max(abs(cos(rad)),0.00001.toFloat())
                 mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(right, (sign * strength).toFloat() / 100)
+                        mShared.state.value.power(right, strength.toFloat() / 100)
                     }
                     catch(_ : IOException) {}
                 }
@@ -290,20 +286,18 @@ class ControllerFragment : Fragment() {
             mBinding.controllerAttachment1.visibility = View.VISIBLE
             mBinding.controllerAttachment1JoystickText.text = motor.text
 
-            mBinding.controllerAttachment1Joystick.setOnMoveListener { angle, strength ->
+            mBinding.controllerAttachment1Joystick.setOnMoveListener { strength ->
                 mFirstJob?.cancel()
-                val rad = transformAngle(angle)
-                val sign = cos(rad) / max(abs(cos(rad)),0.00001.toFloat())
                 mFirstJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(motor, (sign * strength).toFloat() / 100)
+                        mShared.state.value.power(motor, strength.toFloat() / 100)
                     }
                     catch(_ : IOException) {}
                 }
             }
         }
         else {
-            mBinding.controllerAttachment1Joystick.setOnMoveListener { _, strength ->
+            mBinding.controllerAttachment1Joystick.setOnMoveListener { strength ->
                 mFirstJob?.cancel()
             }
             mBinding.controllerAttachment1.visibility = View.GONE
@@ -314,19 +308,17 @@ class ControllerFragment : Fragment() {
         if (motor != null) {
             mBinding.controllerAttachment2.visibility = View.VISIBLE
             mBinding.controllerAttachment2JoystickText.text = motor.text
-            mBinding.controllerAttachment2Joystick.setOnMoveListener { angle, strength ->
+            mBinding.controllerAttachment2Joystick.setOnMoveListener { strength ->
                 mSecondJob?.cancel()
-                val rad = transformAngle(angle)
-                val sign = cos(rad) / max(abs(cos(rad)),0.00001.toFloat())
                 mSecondJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(motor, (sign * strength).toFloat() / 100)
+                        mShared.state.value.power(motor, strength.toFloat() / 100)
                     } catch (_: IOException) {
                     }
                 }
             }
         } else {
-            mBinding.controllerAttachment2Joystick.setOnMoveListener { _, strength ->
+            mBinding.controllerAttachment2Joystick.setOnMoveListener { strength ->
                 mSecondJob?.cancel()
                 mBinding.controllerAttachment2.visibility = View.GONE
             }

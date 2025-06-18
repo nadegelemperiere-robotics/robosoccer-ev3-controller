@@ -4,7 +4,6 @@
    -------------------------------------------------------
    EV3 joystick view
    ------------------------------------------------------- */
-
 package org.mantabots.robosoccer.ui.views;
 
 /* Android includes */

@@ -138,13 +138,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-                <org.mantabots.robosoccer.ui.views.JoystickView
+                <org.mantabots.robosoccer.ui.views.LeverView
                     android:id="@+id/controller_tank_joystick_left"
-                    android:layout_width="@dimen/motor_joystick"
-                    android:layout_height="@dimen/motor_joystick"
+                    android:layout_width="@dimen/motor_lever"
+                    android:layout_height="@dimen/motor_lever"
                     android:layout_margin="@dimen/lines_margin"
-                    app:JV_borderColor="@color/teal_medium"
-                    app:JV_buttonColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
+                    app:LV_knobColor="@color/teal_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toLeftOf="@+id/controller_tank_joystick_right"
@@ -164,13 +164,13 @@
                     app:layout_constraintRight_toLeftOf="@+id/controller_tank_joystick_right"
                     app:layout_constraintTop_toTopOf="parent" />
 
-                <org.mantabots.robosoccer.ui.views.JoystickView
+                <org.mantabots.robosoccer.ui.views.LeverView
                     android:id="@+id/controller_tank_joystick_right"
-                    android:layout_width="@dimen/motor_joystick"
-                    android:layout_height="@dimen/motor_joystick"
+                    android:layout_width="@dimen/motor_lever"
+                    android:layout_height="@dimen/motor_lever"
                     android:layout_margin="@dimen/lines_margin"
-                    app:JV_borderColor="@color/teal_medium"
-                    app:JV_buttonColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
+                    app:LV_knobColor="@color/teal_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@+id/controller_tank_joystick_left"
                     app:layout_constraintRight_toRightOf="parent"
@@ -251,19 +251,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toTopOf="@+id/controller_attachment2"
-                app:layout_constraintHeight_max="@dimen/attachments_joystick"
+                app:layout_constraintHeight_max="@dimen/attachments_lever"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_max="@dimen/attachments_joystick">
+                app:layout_constraintWidth_max="@dimen/attachments_lever">
 
-                <org.mantabots.robosoccer.ui.views.JoystickView
+                <org.mantabots.robosoccer.ui.views.LeverView
                     android:id="@+id/controller_attachment1_joystick"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
-                    app:JV_borderColor="@color/teal_medium"
-                    app:JV_buttonColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
+                    app:LV_knobColor="@color/teal_dark"
                     app:layout_constraintBottom_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -290,19 +290,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_max="@dimen/attachments_joystick"
+                app:layout_constraintHeight_max="@dimen/attachments_lever"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/controller_attachment1"
-                app:layout_constraintWidth_max="@dimen/attachments_joystick">
+                app:layout_constraintWidth_max="@dimen/attachments_lever">
 
-                <org.mantabots.robosoccer.ui.views.JoystickView
+                <org.mantabots.robosoccer.ui.views.LeverView
                     android:id="@+id/controller_attachment2_joystick"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
-                    app:JV_borderColor="@color/teal_medium"
-                    app:JV_buttonColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
+                    app:LV_knobColor="@color/teal_dark"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

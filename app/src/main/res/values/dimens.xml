@@ -8,5 +8,6 @@
     <dimen name="lines_height_inner">56dp</dimen>
     <dimen name="font_size">16sp</dimen>
     <dimen name="motor_joystick">200dp</dimen>
-    <dimen name="attachments_joystick">100sp</dimen>
+    <dimen name="motor_lever">170dp</dimen>
+    <dimen name="attachments_lever">80sp</dimen>
 </resources>
