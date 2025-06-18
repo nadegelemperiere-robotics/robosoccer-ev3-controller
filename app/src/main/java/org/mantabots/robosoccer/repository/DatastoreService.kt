@@ -69,7 +69,7 @@ class SettingsRepository(private val context: Context) {
                 DriveModeProto.UNRECOGNIZED -> DriveMode.ARCADE
             },
             device = proto.device,
-            leftWheel = when (proto.left) {
+            left = when (proto.left) {
                 MotorProto.A -> Motor.A
                 MotorProto.B -> Motor.B
                 MotorProto.C -> Motor.C
@@ -77,7 +77,8 @@ class SettingsRepository(private val context: Context) {
                 MotorProto.UNRECOGNIZED -> Motor.B
                 MotorProto.UNDEFINED -> Motor.B
             },
-            rightWheel = when (proto.right) {
+            leftInverted = proto.leftInverted,
+            right = when (proto.right) {
                 MotorProto.A -> Motor.A
                 MotorProto.B -> Motor.B
                 MotorProto.C -> Motor.C
@@ -85,7 +86,8 @@ class SettingsRepository(private val context: Context) {
                 MotorProto.UNRECOGNIZED -> Motor.C
                 MotorProto.UNDEFINED -> Motor.C
             },
-            firstAttachment = when (proto.first) {
+            rightInverted = proto.rightInverted,
+            first = when (proto.first) {
                 MotorProto.A -> Motor.A
                 MotorProto.B -> Motor.B
                 MotorProto.C -> Motor.C
@@ -93,14 +95,16 @@ class SettingsRepository(private val context: Context) {
                 MotorProto.UNDEFINED -> null
                 MotorProto.UNRECOGNIZED -> null
             },
-            secondAttachment = when (proto.second) {
+            firstInverted = proto.firstInverted,
+            second = when (proto.second) {
                 MotorProto.A -> Motor.A
                 MotorProto.B -> Motor.B
                 MotorProto.C -> Motor.C
                 MotorProto.D -> Motor.D
                 MotorProto.UNDEFINED -> null
                 MotorProto.UNRECOGNIZED -> null
-            }
+            },
+            secondInverted = proto.secondInverted
         )
     }
 
@@ -113,33 +117,37 @@ class SettingsRepository(private val context: Context) {
                 )
                 .setDevice(new.device)
                 .setLeftValue(
-                    if (new.leftWheel == Motor.A) MotorProto.A.number
-                    else if (new.leftWheel == Motor.B) MotorProto.B.number
-                    else if (new.leftWheel == Motor.C) MotorProto.C.number
-                    else if (new.leftWheel == Motor.D) MotorProto.D.number
+                    if (new.left == Motor.A) MotorProto.A.number
+                    else if (new.left == Motor.B) MotorProto.B.number
+                    else if (new.left == Motor.C) MotorProto.C.number
+                    else if (new.left == Motor.D) MotorProto.D.number
                     else MotorProto.UNDEFINED.number
                 )
+                .setLeftInverted(new.leftInverted)
                 .setRightValue(
-                    if (new.rightWheel == Motor.A) MotorProto.A.number
-                    else if (new.rightWheel == Motor.B) MotorProto.B.number
-                    else if (new.rightWheel == Motor.C) MotorProto.C.number
-                    else if (new.rightWheel == Motor.D) MotorProto.D.number
+                    if (new.right == Motor.A) MotorProto.A.number
+                    else if (new.right == Motor.B) MotorProto.B.number
+                    else if (new.right == Motor.C) MotorProto.C.number
+                    else if (new.right == Motor.D) MotorProto.D.number
                     else MotorProto.UNDEFINED.number
                 )
+                .setRightInverted(new.rightInverted)
                 .setFirstValue(
-                    if (new.firstAttachment == Motor.A) MotorProto.A.number
-                    else if (new.firstAttachment == Motor.B) MotorProto.B.number
-                    else if (new.firstAttachment == Motor.C) MotorProto.C.number
-                    else if (new.firstAttachment == Motor.D) MotorProto.D.number
+                    if (new.first == Motor.A) MotorProto.A.number
+                    else if (new.first == Motor.B) MotorProto.B.number
+                    else if (new.first == Motor.C) MotorProto.C.number
+                    else if (new.first == Motor.D) MotorProto.D.number
                     else MotorProto.UNDEFINED.number
                 )
+                .setFirstInverted(new.firstInverted)
                 .setSecondValue(
-                    if (new.secondAttachment == Motor.A) MotorProto.A.number
-                    else if (new.secondAttachment == Motor.B) MotorProto.B.number
-                    else if (new.secondAttachment == Motor.C) MotorProto.C.number
-                    else if (new.secondAttachment == Motor.D) MotorProto.D.number
+                    if (new.second == Motor.A) MotorProto.A.number
+                    else if (new.second == Motor.B) MotorProto.B.number
+                    else if (new.second == Motor.C) MotorProto.C.number
+                    else if (new.second == Motor.D) MotorProto.D.number
                     else MotorProto.UNDEFINED.number
                 )
+                .setSecondInverted(new.secondInverted)
                 .build()
         }
     }

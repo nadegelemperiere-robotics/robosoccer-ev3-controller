@@ -19,10 +19,14 @@ sealed interface ValidationResult {
 data class Settings(
     var driveMode: DriveMode,
     var device: String,
-    var leftWheel: Motor,
-    var rightWheel: Motor,
-    var firstAttachment: Motor?,
-    var secondAttachment: Motor?
+    var left: Motor,
+    var right: Motor,
+    var first: Motor?,
+    var second: Motor?,
+    var leftInverted: Boolean,
+    var rightInverted: Boolean,
+    var firstInverted: Boolean,
+    var secondInverted: Boolean
 )
 {
     fun check(): ValidationResult {
@@ -32,10 +36,10 @@ data class Settings(
 
         /* ② motors must be unique (ignore null attachments) */
         val motors = listOfNotNull(
-            leftWheel,
-            rightWheel,
-            firstAttachment,
-            secondAttachment
+            left,
+            right,
+            first,
+            second
         )
 
         val dupes = motors.groupingBy { it }.eachCount().filterValues { it > 1 }.keys

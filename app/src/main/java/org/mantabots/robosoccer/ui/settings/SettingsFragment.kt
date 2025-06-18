@@ -53,6 +53,10 @@ class SettingsFragment : Fragment() {
     private var mRightMotor = Motor.C
     private var mFirstMotor: Motor? = null
     private var mSecondMotor: Motor? = null
+    private var mLeftInverted = false
+    private var mRightInverted = false
+    private var mFirstInverted = false
+    private var mSecondInverted = false
 
     private lateinit var mRepository: SettingsRepository
     private lateinit var mSaveButton: Button
@@ -61,12 +65,16 @@ class SettingsFragment : Fragment() {
     private lateinit var mDeviceScroller: Scroller<DeviceVH>
     private lateinit var mLeftMotorAdapter: MotorAdapter
     private lateinit var mLeftMotorScroller: Scroller<MotorVH>
+    private lateinit var mLeftMotorInvertCheck: CheckBox
     private lateinit var mRightMotorAdapter: MotorAdapter
     private lateinit var mRightMotorScroller: Scroller<MotorVH>
+    private lateinit var mRightMotorInvertCheck: CheckBox
     private lateinit var mFirstMotorAdapter: MotorAdapter
     private lateinit var mFirstMotorScroller: Scroller<MotorVH>
+    private lateinit var mFirstMotorInvertCheck: CheckBox
     private lateinit var mSecondMotorAdapter: MotorAdapter
     private lateinit var mSecondMotorScroller: Scroller<MotorVH>
+    private lateinit var mSecondMotorInvertCheck: CheckBox
     private lateinit var mFirstMotorCheck: CheckBox
     private lateinit var mSecondMotorCheck: CheckBox
 
@@ -110,7 +118,8 @@ class SettingsFragment : Fragment() {
             context
         )
         mLeftMotorAdapter.submitList(motors)
-
+        mLeftMotorInvertCheck = mBinding.settingsMotorsLeftInvertedCheckbox
+        mLeftMotorInvertCheck.setOnClickListener { mLeftInverted = mLeftMotorInvertCheck.isChecked }
 
         mRightMotorAdapter = MotorAdapter("right")
         mRightMotorScroller = Scroller<MotorVH>(
@@ -120,29 +129,38 @@ class SettingsFragment : Fragment() {
             context
         )
         mRightMotorAdapter.submitList(motors)
+        mRightMotorInvertCheck = mBinding.settingsMotorsRightInvertedCheckbox
+        mRightMotorInvertCheck.setOnClickListener { mRightInverted = mRightMotorInvertCheck.isChecked }
+
 
         mFirstMotorAdapter = MotorAdapter("first")
         mFirstMotorScroller = Scroller<MotorVH>(
-            mBinding.settingsMotorsAttachment1Select,
+            mBinding.settingsMotorsFirstSelect,
             mFirstMotorAdapter,
             { motor -> mFirstMotor = Motor.fromString(motor) },
             context
         )
         mFirstMotorAdapter.submitList(motors)
+        mFirstMotorInvertCheck = mBinding.settingsMotorsFirstInvertedCheckbox
+        mFirstMotorInvertCheck.setOnClickListener { mFirstInverted = mFirstMotorInvertCheck.isChecked }
 
-        mFirstMotorCheck = mBinding.settingsMotorsAttachment1Checkbox
+
+        mFirstMotorCheck = mBinding.settingsMotorsFirstCheckbox
         mFirstMotorCheck.setOnClickListener { checkFirst(mFirstMotorCheck.isChecked) }
 
         mSecondMotorAdapter = MotorAdapter ("second")
         mSecondMotorScroller = Scroller<MotorVH>(
-            mBinding.settingsMotorsAttachment2Select,
+            mBinding.settingsMotorsSecondSelect,
             mSecondMotorAdapter,
             { motor -> mSecondMotor = Motor.fromString(motor) },
             context
         )
         mSecondMotorAdapter.submitList(motors)
+        mSecondMotorInvertCheck = mBinding.settingsMotorsSecondInvertedCheckbox
+        mSecondMotorInvertCheck.setOnClickListener { mSecondInverted = mSecondMotorInvertCheck.isChecked }
 
-        mSecondMotorCheck = mBinding.settingsMotorsAttachment2Checkbox
+
+        mSecondMotorCheck = mBinding.settingsMotorsSecondCheckbox
         mSecondMotorCheck.setOnClickListener { checkSecond(mSecondMotorCheck.isChecked) }
 
         /* Configure saving */
@@ -172,28 +190,40 @@ class SettingsFragment : Fragment() {
 
     private fun checkFirst(check: Boolean) {
         if (check) {
-            mBinding.settingsMotorsAttachment1Select.visibility = View.VISIBLE
-            mBinding.settingsMotorsAttachment1Checkbox.isChecked = true
+            mBinding.settingsMotorsFirstCheckbox.isChecked = true
+            mBinding.settingsMotorsFirstInvertedCheckbox.visibility = View.VISIBLE
+            mBinding.settingsMotorsFirstInverted.visibility = View.VISIBLE
+            mBinding.settingsMotorsFirstSelect.visibility = View.VISIBLE
             mFirstMotor = Motor.A
             mFirstMotorScroller.scroll(mFirstMotor!!.ordinal)
+            mFirstInverted = false
+            mFirstMotorInvertCheck.isChecked = false
         }
         else {
-            mBinding.settingsMotorsAttachment1Checkbox.isChecked = false
-            mBinding.settingsMotorsAttachment1Select.visibility = View.GONE
+            mBinding.settingsMotorsFirstCheckbox.isChecked = false
+            mBinding.settingsMotorsFirstInvertedCheckbox.visibility = View.GONE
+            mBinding.settingsMotorsFirstInverted.visibility = View.GONE
+            mBinding.settingsMotorsFirstSelect.visibility = View.GONE
             mFirstMotor = null
         }
     }
 
     private fun checkSecond(check: Boolean) {
         if (check) {
-            mBinding.settingsMotorsAttachment2Checkbox.isChecked = true
-            mBinding.settingsMotorsAttachment2Select.visibility = View.VISIBLE
+            mBinding.settingsMotorsSecondCheckbox.isChecked = true
+            mBinding.settingsMotorsSecondInvertedCheckbox.visibility = View.VISIBLE
+            mBinding.settingsMotorsSecondInverted.visibility = View.VISIBLE
+            mBinding.settingsMotorsSecondSelect.visibility = View.VISIBLE
             mSecondMotor = Motor.A
             mSecondMotorScroller.scroll(mSecondMotor!!.ordinal)
+            mSecondInverted = false
+            mSecondMotorInvertCheck.isChecked = false
         }
         else {
-            mBinding.settingsMotorsAttachment2Checkbox.isChecked = false
-            mBinding.settingsMotorsAttachment2Select.visibility = View.GONE
+            mBinding.settingsMotorsSecondCheckbox.isChecked = false
+            mBinding.settingsMotorsSecondInvertedCheckbox.visibility = View.GONE
+            mBinding.settingsMotorsSecondInverted.visibility = View.GONE
+            mBinding.settingsMotorsSecondSelect.visibility = View.GONE
             mSecondMotor = null
         }
     }
@@ -202,10 +232,14 @@ class SettingsFragment : Fragment() {
         val settings = Settings(
             driveMode = if (mModeSwitch.isChecked) DriveMode.TANK else DriveMode.ARCADE,
             device = mDevice,
-            leftWheel = mLeftMotor,
-            rightWheel = mRightMotor,
-            firstAttachment = mFirstMotor,
-            secondAttachment = mSecondMotor
+            left = mLeftMotor,
+            leftInverted = mLeftInverted,
+            right = mRightMotor,
+            rightInverted = mRightInverted,
+            first = mFirstMotor,
+            firstInverted = mFirstInverted,
+            second = mSecondMotor,
+            secondInverted = mSecondInverted
         )
         when (val res = settings.check()) {
             ValidationResult.Ok -> {
@@ -230,25 +264,33 @@ class SettingsFragment : Fragment() {
         var position = mDeviceAdapter.currentList.indexOf(mDevice)
         if (position >= 0) { mDeviceScroller.scroll(position) }
 
-        mLeftMotor = settings.leftWheel
-        mLeftMotorScroller.scroll(settings.leftWheel.ordinal)
+        mLeftMotor = settings.left
+        mLeftMotorScroller.scroll(settings.left.ordinal)
+        mLeftInverted = settings.leftInverted
+        mLeftMotorInvertCheck.isChecked = settings.leftInverted
 
-        mRightMotor = settings.rightWheel
-        mRightMotorScroller.scroll(settings.rightWheel.ordinal)
+        mRightMotor = settings.right
+        mRightMotorScroller.scroll(settings.right.ordinal)
+        mRightInverted = settings.rightInverted
+        mRightMotorInvertCheck.isChecked = settings.rightInverted
 
-        if(settings.firstAttachment != null) {
+        if(settings.first != null) {
             checkFirst(true)
-            mFirstMotorScroller.scroll(settings.firstAttachment!!.ordinal)
-            mFirstMotor = settings.firstAttachment
+            mFirstMotorScroller.scroll(settings.first!!.ordinal)
+            mFirstMotor = settings.first
+            mFirstMotorInvertCheck.isChecked = settings.firstInverted
+            mFirstInverted = settings.firstInverted
         }
         else {
             checkFirst(false)
         }
 
-        if(settings.secondAttachment != null) {
+        if(settings.second != null) {
             checkSecond(true)
-            mSecondMotorScroller.scroll(settings.secondAttachment!!.ordinal)
-            mSecondMotor = settings.secondAttachment
+            mSecondMotorScroller.scroll(settings.second!!.ordinal)
+            mSecondMotor = settings.second
+            mSecondMotorInvertCheck.isChecked = settings.secondInverted
+            mSecondInverted = settings.secondInverted
         }
         else {
             checkSecond(false)

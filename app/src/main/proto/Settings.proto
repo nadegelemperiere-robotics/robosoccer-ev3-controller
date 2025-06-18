@@ -20,10 +20,14 @@ enum MotorProto {
 }
 
 message SettingsProto {
-  DriveModeProto      mode      = 1;
-  string              device    = 2;
-  MotorProto          left      = 3;
-  MotorProto          right     = 4;
-  MotorProto          first     = 5;
-  MotorProto          second    = 6;
+  DriveModeProto      mode            = 1;
+  string              device          = 2;
+  MotorProto          left            = 3;
+  bool                leftInverted    = 4;
+  MotorProto          right           = 5;
+  bool                rightInverted   = 6;
+  MotorProto          first           = 7;
+  bool                firstInverted   = 8;
+  MotorProto          second          = 9;
+  bool                secondInverted  = 10;
 }

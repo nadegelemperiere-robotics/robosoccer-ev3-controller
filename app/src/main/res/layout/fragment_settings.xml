@@ -170,7 +170,7 @@
         app:layout_constraintTop_toBottomOf="@+id/settings_mode_divider" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_motors_wheels_container"
+        android:id="@+id/settings_motors_left_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/lines_height"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -189,7 +189,18 @@
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/settings_motors_left_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -205,21 +216,45 @@
             android:gravity="center"
             android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left"
-            app:layout_constraintRight_toLeftOf="@+id/settings_wheels_divider"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_inverted_checkbox"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/string_choice" />
 
-        <View
-            android:id="@+id/settings_wheels_divider"
-            android:layout_width="1dp"
+        <CheckBox
+            android:id="@+id/settings_motors_left_inverted_checkbox"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_inverted"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_left_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_right_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_left_container">
 
         <TextView
             android:id="@+id/settings_motors_right"
@@ -232,8 +267,19 @@
             android:textSize="@dimen/font_size"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_wheels_divider"
-            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_select"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/settings_motors_right_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -249,132 +295,213 @@
             android:gravity="center"
             android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_inverted_checkbox"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/string_choice" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_motors_attachment1_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/lines_height"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_motors_wheels_container">
+        <CheckBox
+            android:id="@+id/settings_motors_right_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/settings_motors_attachment1"
+            android:id="@+id/settings_motors_right_inverted"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:text="@string/settings_motors_attachment1"
             android:padding="@dimen/lines_margin"
-            android:textAlignment="viewStart"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
             android:textSize="@dimen/font_size"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/settings_motors_attachment1_divider"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <View
-            android:id="@+id/settings_motors_attachment1_divider"
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="?android:attr/listDivider"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_inverted_checkbox"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <CheckBox
-            android:id="@+id/settings_motors_attachment1_checkbox"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_motors_attachment1_divider"
-            app:layout_constraintRight_toLeftOf="@+id/settings_motors_attachment1_select"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/settings_motors_attachment1_select"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_margin="@dimen/lines_margin"
-            android:contentDescription="@string/settings_motors_attachment1"
-            android:scrollbars="vertical"
-            android:textSize="@dimen/font_size"
-            android:textAlignment="center"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_motors_attachment1_checkbox"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:listitem="@layout/string_choice" />
     
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_motors_attachment2_container"
+        android:id="@+id/settings_motors_first_container"
         android:layout_width="match_parent"
         android:layout_height="@dimen/lines_height"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_motors_attachment1_container">
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_right_container">
 
         <TextView
-            android:id="@+id/settings_motors_attachment2"
+            android:id="@+id/settings_motors_first"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:text="@string/settings_motors_attachment2"
+            android:text="@string/settings_motors_first"
             android:padding="@dimen/lines_margin"
             android:textAlignment="viewStart"
             android:textSize="@dimen/font_size"
             android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/settings_motors_attachment2_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_checkbox"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_first_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_divider"
             app:layout_constraintTop_toTopOf="parent" />
         
         <View
-            android:id="@+id/settings_motors_attachment2_divider"
+            android:id="@+id/settings_motors_first_divider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="?android:attr/listDivider"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <CheckBox
-            android:id="@+id/settings_motors_attachment2_checkbox"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_motors_attachment2_divider"
-            app:layout_constraintRight_toLeftOf="@+id/settings_motors_attachment2_select"
-            app:layout_constraintTop_toTopOf="parent" />
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/settings_motors_attachment2_select"
-            android:layout_width="0dp"
+            android:id="@+id/settings_motors_first_select"
+            android:layout_width="@dimen/lines_height"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:contentDescription="@string/settings_motors_attachment2"
+            android:contentDescription="@string/settings_motors_first"
+            android:padding="@dimen/lines_margin"
             android:scrollbars="vertical"
             android:textSize="@dimen/font_size"
             android:textAlignment="center"
             android:gravity="center"
+            android:clickable="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/settings_motors_attachment2_checkbox"
-            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_inverted_checkbox"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/string_choice" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_first_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_first_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_second_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_first_container">
+
+        <TextView
+            android:id="@+id/settings_motors_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:text="@string/settings_motors_second"
+            android:padding="@dimen/lines_margin"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_checkbox"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_second_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <View
+            android:id="@+id/settings_motors_second_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_second_select"
+            android:layout_width="@dimen/lines_height"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:contentDescription="@string/settings_motors_second"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/font_size"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_inverted_checkbox"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+        
+        <CheckBox
+            android:id="@+id/settings_motors_second_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_second_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
     
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -385,7 +512,7 @@
         android:background="?android:attr/listDivider"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_motors_attachment2_container" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_second_container" />
 
     <Button
         android:id="@+id/settings_save"

@@ -10,4 +10,5 @@
     <dimen name="motor_joystick">200dp</dimen>
     <dimen name="motor_lever">170dp</dimen>
     <dimen name="attachments_lever">80sp</dimen>
+    <dimen name="motors_separation">0.5</dimen>
 </resources>

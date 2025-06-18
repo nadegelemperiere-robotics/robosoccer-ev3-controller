@@ -76,7 +76,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/controller_motors"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lines_margin"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -247,10 +247,10 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/controller_attachment1"
+                android:id="@+id/controller_first"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@+id/controller_attachment2"
+                app:layout_constraintBottom_toTopOf="@+id/controller_second"
                 app:layout_constraintHeight_max="@dimen/attachments_lever"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
@@ -258,7 +258,7 @@
                 app:layout_constraintWidth_max="@dimen/attachments_lever">
 
                 <org.mantabots.robosoccer.ui.views.LeverView
-                    android:id="@+id/controller_attachment1_joystick"
+                    android:id="@+id/controller_first_joystick"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
@@ -270,7 +270,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_attachment1_joystick_text"
+                    android:id="@+id/controller_first_joystick_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
@@ -286,18 +286,18 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/controller_attachment2"
+                android:id="@+id/controller_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintHeight_max="@dimen/attachments_lever"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/controller_attachment1"
+                app:layout_constraintTop_toBottomOf="@+id/controller_first"
                 app:layout_constraintWidth_max="@dimen/attachments_lever">
 
                 <org.mantabots.robosoccer.ui.views.LeverView
-                    android:id="@+id/controller_attachment2_joystick"
+                    android:id="@+id/controller_second_joystick"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
@@ -309,7 +309,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_attachment2_joystick_text"
+                    android:id="@+id/controller_second_joystick_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"

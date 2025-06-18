@@ -70,12 +70,16 @@ class ControllerFragment : Fragment() {
 
     private var mLeftMotor: Motor? = null
     private var mLeftJob: Job? = null
+    private var mLeftInverted = false
     private var mRightMotor: Motor? = null
     private var mRightJob: Job? = null
+    private var mRightInverted = false
     private var mFirstMotor: Motor? = null
     private var mFirstJob: Job? = null
+    private var mFirstInverted = false
     private var mSecondMotor: Motor? = null
     private var mSecondJob: Job? = null
+    private var mSecondInverted = false
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -156,10 +160,16 @@ class ControllerFragment : Fragment() {
     private fun load(settings: Settings) {
 
         // Gather motors
-        mLeftMotor = settings.leftWheel
-        mRightMotor = settings.rightWheel
-        mFirstMotor = settings.firstAttachment
-        mSecondMotor = settings.secondAttachment
+        mLeftMotor = settings.left
+        mRightMotor = settings.right
+        mFirstMotor = settings.first
+        mSecondMotor = settings.second
+
+        mLeftInverted = settings.leftInverted
+        mRightInverted = settings.rightInverted
+        mFirstInverted = settings.firstInverted
+        mSecondInverted = settings.secondInverted
+
         mDevice = settings.device
 
         // Configure joysticks
@@ -176,9 +186,6 @@ class ControllerFragment : Fragment() {
         configureSecondAttachment(mSecondMotor)
 
         // Connect to EV3
-        val waiting: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_waiting_teal_24dp)
-        mConnect.setImageDrawable(waiting)
-
         mBinding.controllerRetryButton.setOnClickListener{ deviceConnection(mDevice) }
         deviceConnection(mDevice)
 
@@ -209,6 +216,11 @@ class ControllerFragment : Fragment() {
                 }
             }
         }
+        else{
+            val settings_error: Drawable? =
+                ContextCompat.getDrawable(requireContext(), R.drawable.ic_settings_error_red_24dp)
+            mConnect.setImageDrawable(settings_error)
+        }
 
     }
 
@@ -228,7 +240,8 @@ class ControllerFragment : Fragment() {
                 mLeftJob?.cancel()
                 mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(left, strength.toFloat() / 100)
+                        if(mLeftInverted) { mShared.state.value.power(left, -strength.toFloat() / 100) }
+                        else { mShared.state.value.power(left, strength.toFloat() / 100) }
                     } catch (_: IOException) { }
                 }
             }
@@ -239,7 +252,8 @@ class ControllerFragment : Fragment() {
                 mRightJob?.cancel()
                 mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(right, strength.toFloat() / 100)
+                        if(mRightInverted) { mShared.state.value.power(right, -strength.toFloat() / 100) }
+                        else { mShared.state.value.power(right, strength.toFloat() / 100) }
                     }
                     catch(_ : IOException) {}
                 }
@@ -264,7 +278,8 @@ class ControllerFragment : Fragment() {
             if(left != null) {
                 mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(left, speeds.first)
+                        if(mLeftInverted) { mShared.state.value.power(left, -speeds.first) }
+                        else { mShared.state.value.power(left, speeds.first) }
                     }
                     catch(_ : IOException) {}
 
@@ -273,7 +288,8 @@ class ControllerFragment : Fragment() {
             if(right != null) {
                 mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(right, speeds.second)
+                        if(mRightInverted) { mShared.state.value.power(right, -speeds.second) }
+                        else { mShared.state.value.power(right, speeds.second) }
                     }
                     catch(_ : IOException) {}
                 }
@@ -283,44 +299,46 @@ class ControllerFragment : Fragment() {
 
     private fun configureFirstAttachment(motor: Motor?) {
         if (motor != null) {
-            mBinding.controllerAttachment1.visibility = View.VISIBLE
-            mBinding.controllerAttachment1JoystickText.text = motor.text
+            mBinding.controllerFirst.visibility = View.VISIBLE
+            mBinding.controllerFirstJoystickText.text = motor.text
 
-            mBinding.controllerAttachment1Joystick.setOnMoveListener { strength ->
+            mBinding.controllerFirstJoystick.setOnMoveListener { strength ->
                 mFirstJob?.cancel()
                 mFirstJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(motor, strength.toFloat() / 100)
+                        if(mFirstInverted) { mShared.state.value.power(motor, -strength.toFloat() / 100) }
+                        else { mShared.state.value.power(motor, strength.toFloat() / 100) }
                     }
                     catch(_ : IOException) {}
                 }
             }
         }
         else {
-            mBinding.controllerAttachment1Joystick.setOnMoveListener { strength ->
+            mBinding.controllerFirstJoystick.setOnMoveListener { strength ->
                 mFirstJob?.cancel()
             }
-            mBinding.controllerAttachment1.visibility = View.GONE
+            mBinding.controllerFirst.visibility = View.GONE
         }
     }
 
     private fun configureSecondAttachment(motor: Motor?) {
         if (motor != null) {
-            mBinding.controllerAttachment2.visibility = View.VISIBLE
-            mBinding.controllerAttachment2JoystickText.text = motor.text
-            mBinding.controllerAttachment2Joystick.setOnMoveListener { strength ->
+            mBinding.controllerSecond.visibility = View.VISIBLE
+            mBinding.controllerSecondJoystickText.text = motor.text
+            mBinding.controllerSecondJoystick.setOnMoveListener { strength ->
                 mSecondJob?.cancel()
                 mSecondJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
-                        mShared.state.value.power(motor, strength.toFloat() / 100)
+                        if(mSecondInverted) { mShared.state.value.power(motor, -strength.toFloat() / 100) }
+                        else { mShared.state.value.power(motor, strength.toFloat() / 100) }
                     } catch (_: IOException) {
                     }
                 }
             }
         } else {
-            mBinding.controllerAttachment2Joystick.setOnMoveListener { strength ->
+            mBinding.controllerSecondJoystick.setOnMoveListener { strength ->
                 mSecondJob?.cancel()
-                mBinding.controllerAttachment2.visibility = View.GONE
+                mBinding.controllerSecond.visibility = View.GONE
             }
         }
     }
