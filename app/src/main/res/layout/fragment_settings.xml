@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/settings_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:elevation="@dimen/lines_margin"
+    tools:context=".ui.settings.SettingsFragment">
+
+    <TextView
+        android:id="@+id/settings_device_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/lines_margin"
+        android:text="@string/settings_device_subtitle"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="@dimen/font_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_device_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_device_subtitle">
+
+        <ImageButton
+            android:id="@+id/settings_device_refresh"
+            android:layout_width="48dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:backgroundTint="@color/teal_medium"
+            android:contentDescription="@string/settings_device_refresh"
+            android:elevation="3dp"
+            android:src="@drawable/ic_refresh_white_24dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settings_device_recycler"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@+id/settings_device_recycler"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_device_recycler"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:clickable="false"
+            android:contentDescription="@string/settings_device_swipe"
+            android:scrollbars="vertical"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/settings_device_refresh"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/settings_device_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_device_container" />
+
+    <TextView
+        android:id="@+id/settings_mode_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/lines_margin"
+        android:text="@string/settings_mode_subtitle"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_device_divider" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_mode_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_mode_subtitle">
+
+        <TextView
+            android:id="@+id/settings_mode_arcade"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_mode_arcade"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/settings_mode_switch"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/settings_mode_switch"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:gravity="center"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBaseline_toBaselineOf="@+id/settings_mode_arcade"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_mode_tank"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_mode_tank"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBaseline_toBaselineOf="@+id/settings_mode_arcade"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/settings_mode_switch"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/settings_mode_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_mode_container" />
+    
+    <TextView
+        android:id="@+id/settings_motors_subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/lines_margin"
+        android:text="@string/settings_motors_subtitle"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="@dimen/font_size"
+        android:textStyle="bold"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_mode_divider" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_left_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_subtitle">
+
+        <TextView
+            android:id="@+id/settings_motors_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_left"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/settings_motors_left_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_left_select"
+            android:layout_width="@dimen/lines_height"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:clickable="false"
+            android:contentDescription="@string/settings_motors_left"
+            android:padding="@dimen/lines_margin"
+            android:scrollbars="vertical"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_inverted_checkbox"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_left_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_left_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_right_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_left_container">
+
+        <TextView
+            android:id="@+id/settings_motors_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_right"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/settings_motors_right_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_right_select"
+            android:layout_width="@dimen/lines_height"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:clickable="false"
+            android:contentDescription="@string/settings_motors_right"
+            android:padding="@dimen/lines_margin"
+            android:scrollbars="vertical"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:textSize="@dimen/font_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_inverted_checkbox"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_right_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_right_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_first_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_right_container">
+
+        <TextView
+            android:id="@+id/settings_motors_first"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:text="@string/settings_motors_first"
+            android:padding="@dimen/lines_margin"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_checkbox"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_first_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <View
+            android:id="@+id/settings_motors_first_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_first_select"
+            android:layout_width="@dimen/lines_height"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:contentDescription="@string/settings_motors_first"
+            android:padding="@dimen/lines_margin"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/font_size"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_inverted_checkbox"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_first_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_first_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/settings_motors_second_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/lines_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_first_container">
+
+        <TextView
+            android:id="@+id/settings_motors_second"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:text="@string/settings_motors_second"
+            android:padding="@dimen/lines_margin"
+            android:textAlignment="viewStart"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_checkbox"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/settings_motors_second_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_divider"
+            app:layout_constraintTop_toTopOf="parent" />
+        
+        <View
+            android:id="@+id/settings_motors_second_divider"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/settings_motors_second_select"
+            android:layout_width="@dimen/lines_height"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:contentDescription="@string/settings_motors_second"
+            android:scrollbars="vertical"
+            android:textSize="@dimen/font_size"
+            android:textAlignment="center"
+            android:gravity="center"
+            android:clickable="false"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_divider"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_inverted_checkbox"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/string_choice" />
+        
+        <CheckBox
+            android:id="@+id/settings_motors_second_inverted_checkbox"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_select"
+            app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_inverted"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/settings_motors_second_inverted"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/lines_margin"
+            android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_inverted"
+            android:textAlignment="viewEnd"
+            android:textSize="@dimen/font_size"
+            android:gravity="center_vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_inverted_checkbox"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/settings_motors_divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_second_container" />
+
+    <Button
+        android:id="@+id/settings_save"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/lines_margin"
+        android:text="@string/settings_save"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_divider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

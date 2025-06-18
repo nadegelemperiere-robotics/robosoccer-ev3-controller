@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">robosoccer</string>
+    <string name="controller_title">CONTROLLER</string>
+    <string name="controller_status_mode">Mode</string>
+    <string name="controller_status_reference">Reference</string>
+    <string name="controller_status_connect">Device</string>
+    <string name="controller_status_mode_icon">Mode</string>
+    <string name="controller_status_reference_icon">Reference</string>
+    <string name="controller_status_connect_icon">Connect</string>
+    <string name="controller_status_retry">Retry</string>
+    <string name="settings_title">SETTINGS</string>
+    <string name="settings_device_subtitle">Devices</string>
+    <string name="settings_device_refresh">Devices refresh</string>
+    <string name="settings_device_swipe">Devices swipe</string>
+    <string name="settings_mode_subtitle">Controller Mode</string>
+    <string name="settings_mode_arcade">arcade</string>
+    <string name="settings_mode_tank">tank</string>
+    <string name="settings_mode_switch">drive</string>
+    <string name="settings_mode_arcade_icon">arcade</string>
+    <string name="settings_mode_tank_icon">tank</string>
+    <string name="settings_reference_subtitle">Controller Reference</string>
+    <string name="settings_reference_field">field centric</string>
+    <string name="settings_reference_robot">robot centric</string>
+    <string name="settings_reference">reference</string>
+    <string name="settings_reference_field_icon">field</string>
+    <string name="settings_reference_robot_icon">robot</string>
+    <string name="settings_motors_inverted">Invert</string>
+    <string name="settings_motors_subtitle">Motors</string>
+    <string name="settings_motors_left">left wheel</string>
+    <string name="settings_motors_right">right wheel</string>
+    <string name="settings_motors_first">1st attachment</string>
+    <string name="settings_motors_second">2nd attachment</string>
+    <string name="settings_save">Save</string>
+
+</resources>

@@ -1,0 +1,33 @@
+syntax = "proto3";
+package settings;
+
+option java_package = "org.mantabots.robosoccer.proto";
+option java_multiple_files = true;
+option optimize_for = LITE_RUNTIME;
+
+
+enum DriveModeProto {
+  ARCADE = 0;
+  TANK   = 1;
+}
+
+enum MotorProto {
+  A = 0;
+  B = 1;
+  C = 2;
+  D = 3;
+  UNDEFINED = 10;
+}
+
+message SettingsProto {
+  DriveModeProto      mode            = 1;
+  string              device          = 2;
+  MotorProto          left            = 3;
+  bool                leftInverted    = 4;
+  MotorProto          right           = 5;
+  bool                rightInverted   = 6;
+  MotorProto          first           = 7;
+  bool                firstInverted   = 8;
+  MotorProto          second          = 9;
+  bool                secondInverted  = 10;
+}
