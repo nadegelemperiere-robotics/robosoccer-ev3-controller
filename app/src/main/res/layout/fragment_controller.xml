@@ -5,10 +5,11 @@
     android:id="@+id/controller_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:visibility="visible"
-    app:layout_constraintBottom_toBottomOf="parent"
+    android:layout_marginTop="100sp"
+    android:layout_marginLeft="20sp"
+    android:layout_marginRight="20sp"
     app:layout_constraintTop_toTopOf="parent"
-    tools:visibility="visible">
+    tools:context=".ui.controller.ControllerFragment">
 
     <!-- ───────────────────────────  S T A T U S  ─────────────────────-──────────── -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -24,9 +25,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:text="@string/controller_status_connect"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/controller_status_connect_icon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,9 +47,9 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:text="@string/controller_status_mode"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/controller_status_mode_icon"
             app:layout_constraintTop_toTopOf="parent" />
@@ -80,22 +81,22 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lines_margin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings_status_divider"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_status_divider">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/controller_retry"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/controller_wheels"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/controller_wheels">
+            app:layout_constraintRight_toLeftOf="@+id/controller_wheels"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
                 android:id="@+id/controller_retry_button"
@@ -112,7 +113,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
-            
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -120,15 +121,15 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/controller_retry"
             app:layout_constraintEnd_toStartOf="@+id/controller_attachments"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toLeftOf="@+id/controller_attachments">
+            app:layout_constraintRight_toLeftOf="@+id/controller_attachments"
+            app:layout_constraintStart_toEndOf="@+id/controller_retry"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- ─────────────────────────────  T A N K  ──────────────────────────────── -->
+            <!-- ─────────────────────────────  L E V E R S  ──────────────────────────────── -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/controller_tank"
+                android:id="@+id/controller_levers"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -139,63 +140,64 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <org.mantabots.robosoccer.ui.views.LeverView
-                    android:id="@+id/controller_tank_joystick_left"
+                    android:id="@+id/controller_levers_left"
                     android:layout_width="@dimen/motor_lever"
                     android:layout_height="@dimen/motor_lever"
                     android:layout_margin="@dimen/lines_margin"
-                    app:LV_railColor="@color/teal_medium"
                     app:LV_knobColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/controller_tank_joystick_right"
+                    app:layout_constraintRight_toLeftOf="@+id/controller_levers_right"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_tank_joystick_left_text"
+                    android:id="@+id/controller_levers_left_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
+                    android:gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toLeftOf="@+id/controller_tank_joystick_right"
+                    app:layout_constraintRight_toLeftOf="@+id/controller_levers_right"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <org.mantabots.robosoccer.ui.views.LeverView
-                    android:id="@+id/controller_tank_joystick_right"
+                    android:id="@+id/controller_levers_right"
                     android:layout_width="@dimen/motor_lever"
                     android:layout_height="@dimen/motor_lever"
                     android:layout_margin="@dimen/lines_margin"
-                    app:LV_railColor="@color/teal_medium"
+                    android:rotation="90"
                     app:LV_knobColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/controller_tank_joystick_left"
+                    app:layout_constraintLeft_toRightOf="@+id/controller_levers_left"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_tank_joystick_right_text"
+                    android:id="@+id/controller_levers_right_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
+                    android:gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintLeft_toRightOf="@+id/controller_tank_joystick_left"
+                    app:layout_constraintLeft_toRightOf="@+id/controller_levers_left"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- ───────────────────────────  A R C A D E  ────────────────────────────── -->
+            <!-- ───────────────────────────  J O Y S T I C K  ────────────────────────────── -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/controller_arcade"
+                android:id="@+id/controller_joystick"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -206,7 +208,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <org.mantabots.robosoccer.ui.views.JoystickView
-                    android:id="@+id/controller_arcade_joystick"
+                    android:id="@+id/controller_joystick_joystick"
                     android:layout_width="@dimen/motor_joystick"
                     android:layout_height="@dimen/motor_joystick"
                     android:layout_margin="@dimen/lines_margin"
@@ -218,14 +220,14 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_arcade_joystick_text"
+                    android:id="@+id/controller_joystick_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
+                    android:gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -258,26 +260,26 @@
                 app:layout_constraintWidth_max="@dimen/attachments_lever">
 
                 <org.mantabots.robosoccer.ui.views.LeverView
-                    android:id="@+id/controller_first_joystick"
+                    android:id="@+id/controller_first_lever"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
-                    app:LV_railColor="@color/teal_medium"
                     app:LV_knobColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
                     app:layout_constraintBottom_toTopOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_first_joystick_text"
+                    android:id="@+id/controller_first_lever_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
+                    android:gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
@@ -297,26 +299,26 @@
                 app:layout_constraintWidth_max="@dimen/attachments_lever">
 
                 <org.mantabots.robosoccer.ui.views.LeverView
-                    android:id="@+id/controller_second_joystick"
+                    android:id="@+id/controller_second_lever"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
-                    app:LV_railColor="@color/teal_medium"
                     app:LV_knobColor="@color/teal_dark"
+                    app:LV_railColor="@color/teal_medium"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
-                    android:id="@+id/controller_second_joystick_text"
+                    android:id="@+id/controller_second_lever_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_margin="@dimen/lines_margin"
+                    android:gravity="center_vertical"
+                    android:textAlignment="center"
                     android:textColor="@color/white"
                     android:textSize="@dimen/font_size"
-                    android:textAlignment="center"
-                    android:gravity="center_vertical"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"

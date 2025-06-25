@@ -3,10 +3,11 @@
     android:id="@+id/string_choice"
     android:layout_width="match_parent"
     android:layout_height="@dimen/small_lines_height"
-    android:textAlignment="center"
-    android:gravity="center"
-    android:textAppearance="?attr/textAppearanceBodyLarge"
     android:background="?attr/selectableItemBackground"
-    android:textSize="@dimen/font_size"
     android:clickable="true"
-    android:focusable="true"/>
+    android:focusable="true"
+    android:gravity="center"
+    android:textAlignment="center"
+    android:textAppearance="?attr/textAppearanceBodyLarge"
+    android:textColor="@color/font_color"
+    android:textSize="@dimen/font_size" />

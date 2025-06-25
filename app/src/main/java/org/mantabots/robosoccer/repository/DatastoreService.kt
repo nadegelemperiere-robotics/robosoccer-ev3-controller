@@ -35,7 +35,7 @@ import org.mantabots.robosoccer.proto.SettingsProto
 object SettingsSerializer : Serializer<SettingsProto> {
     override val defaultValue = SettingsProto
         .newBuilder()
-        .setModeValue(DriveModeProto.ARCADE.number)
+        .setModeValue(DriveModeProto.JOYSTICK.number)
         .setDevice("")
         .setLeft(MotorProto.B)
         .setRight(MotorProto.C)
@@ -64,9 +64,9 @@ class SettingsRepository(private val context: Context) {
     val settings = context.settingsStore.data.map { proto ->
         Settings(
             driveMode = when (proto.mode) {
-                DriveModeProto.TANK -> DriveMode.TANK
-                DriveModeProto.ARCADE -> DriveMode.ARCADE
-                DriveModeProto.UNRECOGNIZED -> DriveMode.ARCADE
+                DriveModeProto.LEVERS -> DriveMode.LEVERS
+                DriveModeProto.JOYSTICK -> DriveMode.JOYSTICK
+                DriveModeProto.UNRECOGNIZED -> DriveMode.JOYSTICK
             },
             device = proto.device,
             left = when (proto.left) {
@@ -112,8 +112,8 @@ class SettingsRepository(private val context: Context) {
         context.settingsStore.updateData { old ->
             old.toBuilder()
                 .setModeValue(
-                    if (new.driveMode == DriveMode.TANK) DriveModeProto.TANK.number
-                    else DriveModeProto.ARCADE.number
+                    if (new.driveMode == DriveMode.LEVERS) DriveModeProto.LEVERS.number
+                    else DriveModeProto.JOYSTICK.number
                 )
                 .setDevice(new.device)
                 .setLeftValue(

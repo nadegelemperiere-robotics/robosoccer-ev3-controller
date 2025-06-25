@@ -58,13 +58,13 @@ class ControllerFragment : Fragment() {
 
     private val mShared: SharedData by activityViewModels()
 
-    private val sArcadeAngleRatio = 0.25
+    private val sJoystickAngleRatio = 0.25
 
     private lateinit var mRepository: SettingsRepository
     private lateinit var mConnect: ImageView
     private lateinit var mMode: ImageView
-    private lateinit var mArcade: ConstraintLayout
-    private lateinit var mTank: ConstraintLayout
+    private lateinit var mJoystick: ConstraintLayout
+    private lateinit var mLevers: ConstraintLayout
 
     private var mDevice = ""
 
@@ -81,6 +81,9 @@ class ControllerFragment : Fragment() {
     private var mSecondJob: Job? = null
     private var mSecondInverted = false
 
+    private var mLeft = 0
+    private var mRight = 0
+
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mRepository = SettingsRepository(context.applicationContext)
@@ -96,8 +99,8 @@ class ControllerFragment : Fragment() {
         _binding = FragmentControllerBinding.inflate(inflater, container, false)
         val root: View = mBinding.root
 
-        mArcade = mBinding.controllerArcade
-        mTank = mBinding.controllerTank
+        mJoystick = mBinding.controllerJoystick
+        mLevers = mBinding.controllerLevers
 
         mMode = mBinding.controllerStatusModeIcon
         mConnect = mBinding.controllerStatusConnectIcon
@@ -173,8 +176,8 @@ class ControllerFragment : Fragment() {
         mDevice = settings.device
 
         // Configure joysticks
-        if (settings.driveMode == DriveMode.ARCADE) { configureArcade(mLeftMotor, mRightMotor)  }
-        else if (settings.driveMode == DriveMode.TANK) { configureTank(mLeftMotor, mRightMotor) }
+        if (settings.driveMode == DriveMode.JOYSTICK) { configureJoystick(mLeftMotor, mRightMotor)  }
+        else if (settings.driveMode == DriveMode.LEVERS) { configureLevers(mLeftMotor, mRightMotor) }
 
         if ((mSecondMotor == null) && (mFirstMotor == null)) {
             mBinding.controllerAttachments.visibility = View.GONE
@@ -224,57 +227,92 @@ class ControllerFragment : Fragment() {
 
     }
 
-    private fun configureTank(left:Motor?, right:Motor?) {
+    private fun configureLevers(left:Motor?, right:Motor?) {
 
-        val icon: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_tank_teal_24dp)
+        val icon: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_levers_teal_24dp)
         mMode.setImageDrawable(icon)
-        mArcade.visibility = View.GONE
-        mTank.visibility = View.VISIBLE
+        mJoystick.visibility = View.GONE
+        mLevers.visibility = View.VISIBLE
 
-        mBinding.controllerTankJoystickLeftText.text = left?.text
-        mBinding.controllerTankJoystickRightText.text = right?.text
+        mBinding.controllerLeversLeftText.text = "↑"
+        mBinding.controllerLeversRightText.text = "⌒"
 
-        if(left != null) {
-
-            mBinding.controllerTankJoystickLeft.setOnMoveListener { strength ->
+        mBinding.controllerLeversLeft.setOnMoveListener { strength ->
+            if(mLeft != strength) {
+                mLeft = strength
                 mLeftJob?.cancel()
-                mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    try {
-                        if(mLeftInverted) { mShared.state.value.power(left, -strength.toFloat() / 100) }
-                        else { mShared.state.value.power(left, strength.toFloat() / 100) }
-                    } catch (_: IOException) { }
+                mRightJob?.cancel()
+                val speeds = computeLeversMotorSpeeds(mLeft, mRight)
+                if(left != null) {
+                    mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            if(mLeftInverted) { mShared.state.value.power(left, -speeds.first) }
+                            else { mShared.state.value.power(left, speeds.first) }
+                        }
+                        catch(_ : IOException) {}
+
+                    }
+                }
+                if(right != null) {
+                    mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            if(mRightInverted) { mShared.state.value.power(right, -speeds.second) }
+                            else { mShared.state.value.power(right, speeds.second) }
+                        }
+                        catch(_ : IOException) {}
+                    }
                 }
             }
         }
 
-        if(right != null) {
-            mBinding.controllerTankJoystickRight.setOnMoveListener {  strength ->
+        mBinding.controllerLeversRight.setOnMoveListener {  strength ->
+            if(mRight != strength) {
+                mRight = strength
+                mLeftJob?.cancel()
                 mRightJob?.cancel()
-                mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
-                    try {
-                        if(mRightInverted) { mShared.state.value.power(right, -strength.toFloat() / 100) }
-                        else { mShared.state.value.power(right, strength.toFloat() / 100) }
+                val speeds = computeLeversMotorSpeeds(mLeft, mRight)
+                if (left != null) {
+                    mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            if (mLeftInverted) {
+                                mShared.state.value.power(left, -speeds.first)
+                            } else {
+                                mShared.state.value.power(left, speeds.first)
+                            }
+                        } catch (_: IOException) {
+                        }
+
                     }
-                    catch(_ : IOException) {}
+                }
+                if (right != null) {
+                    mRightJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
+                        try {
+                            if (mRightInverted) {
+                                mShared.state.value.power(right, -speeds.second)
+                            } else {
+                                mShared.state.value.power(right, speeds.second)
+                            }
+                        } catch (_: IOException) {
+                        }
+                    }
                 }
             }
         }
     }
 
-    private fun configureArcade(left:Motor?, right:Motor?) {
+    private fun configureJoystick(left:Motor?, right:Motor?) {
 
-        val icon: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_arcade_teal_24dp)
+        val icon: Drawable? = ContextCompat.getDrawable(requireContext(), R.drawable.ic_joystick_teal_24dp)
         mMode.setImageDrawable(icon)
-        mArcade.visibility = View.VISIBLE
-        mTank.visibility = View.GONE
+        mJoystick.visibility = View.VISIBLE
+        mLevers.visibility = View.GONE
 
-        mBinding.controllerArcadeJoystickText.text = "${left?.text} / ${right?.text}"
+        mBinding.controllerJoystickText.text = "${left?.text} / ${right?.text}"
 
-        mBinding.controllerArcadeJoystick.setOnMoveListener { angle, strength ->
-
+        mBinding.controllerJoystickJoystick.setOnMoveListener { angle, strength ->
             mLeftJob?.cancel()
             mRightJob?.cancel()
-            val speeds = computeArcadeMotorSpeeds(angle, strength)
+            val speeds = computeJoystickMotorSpeeds(- angle + 90, strength)
             if(left != null) {
                 mLeftJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
@@ -300,9 +338,9 @@ class ControllerFragment : Fragment() {
     private fun configureFirstAttachment(motor: Motor?) {
         if (motor != null) {
             mBinding.controllerFirst.visibility = View.VISIBLE
-            mBinding.controllerFirstJoystickText.text = motor.text
+            mBinding.controllerFirstLeverText.text = motor.text
 
-            mBinding.controllerFirstJoystick.setOnMoveListener { strength ->
+            mBinding.controllerFirstLever.setOnMoveListener { strength ->
                 mFirstJob?.cancel()
                 mFirstJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
@@ -314,18 +352,18 @@ class ControllerFragment : Fragment() {
             }
         }
         else {
-            mBinding.controllerFirstJoystick.setOnMoveListener { strength ->
+            mBinding.controllerFirst.visibility = View.GONE
+            mBinding.controllerFirstLever.setOnMoveListener { strength ->
                 mFirstJob?.cancel()
             }
-            mBinding.controllerFirst.visibility = View.GONE
         }
     }
 
     private fun configureSecondAttachment(motor: Motor?) {
         if (motor != null) {
             mBinding.controllerSecond.visibility = View.VISIBLE
-            mBinding.controllerSecondJoystickText.text = motor.text
-            mBinding.controllerSecondJoystick.setOnMoveListener { strength ->
+            mBinding.controllerSecondLeverText.text = motor.text
+            mBinding.controllerSecondLever.setOnMoveListener { strength ->
                 mSecondJob?.cancel()
                 mSecondJob = viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     try {
@@ -336,20 +374,20 @@ class ControllerFragment : Fragment() {
                 }
             }
         } else {
-            mBinding.controllerSecondJoystick.setOnMoveListener { strength ->
+            mBinding.controllerSecond.visibility = View.GONE
+            mBinding.controllerSecondLever.setOnMoveListener { strength ->
                 mSecondJob?.cancel()
-                mBinding.controllerSecond.visibility = View.GONE
             }
         }
     }
 
-    private fun computeArcadeMotorSpeeds(angle:Int, strength:Int): Pair<Float, Float> {
+    private fun computeJoystickMotorSpeeds(angle:Int, strength:Int): Pair<Float, Float> {
 
         var result = Pair<Float,Float>(0.0f,0.0f)
 
         val rad = transformAngle(angle)
         val y =  strength.toFloat() / 100 * cos(rad)
-        val x =  strength.toFloat() / 100 * sin(rad) * sArcadeAngleRatio.toFloat()
+        val x =  strength.toFloat() / 100 * sin(rad) * sJoystickAngleRatio.toFloat()
         var left  = y + x
         var right = y - x
         // scale so |power| ≤ 1
@@ -361,7 +399,23 @@ class ControllerFragment : Fragment() {
         return result
     }
 
+    private fun computeLeversMotorSpeeds(translation:Int, rotation:Int): Pair<Float, Float> {
+
+        var result = Pair<Float,Float>(0.0f,0.0f)
+
+        var left = Math.copySign(Math.pow(Math.abs(rotation.toDouble() / 100), 1.5),rotation.toDouble())
+        var right = -Math.copySign(Math.pow(Math.abs(rotation.toDouble() / 100), 1.5),rotation.toDouble())
+        left += 2 * Math.copySign(translation.toDouble() / 100 * translation.toDouble() / 100, translation.toDouble())
+        right += 2 * Math.copySign(translation.toDouble() / 100 * translation.toDouble() / 100, translation.toDouble())
+        val m = max(abs(left), abs(right))
+        if (m > 1) { left /= m; right /= m }
+
+        result= Pair<Float,Float>(left.toFloat(),right.toFloat())
+
+        return result
+    }
+
     private fun transformAngle(angle: Int): Float {
-        return (-(angle - 90).toFloat() / 180 * PI).toFloat()
+        return (angle.toFloat() / 180 * PI).toFloat()
     }
 }

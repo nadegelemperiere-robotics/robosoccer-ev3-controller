@@ -230,7 +230,7 @@ class SettingsFragment : Fragment() {
 
     private fun save() {
         val settings = Settings(
-            driveMode = if (mModeSwitch.isChecked) DriveMode.TANK else DriveMode.ARCADE,
+            driveMode = if (mModeSwitch.isChecked) DriveMode.LEVERS else DriveMode.JOYSTICK,
             device = mDevice,
             left = mLeftMotor,
             leftInverted = mLeftInverted,
@@ -258,7 +258,7 @@ class SettingsFragment : Fragment() {
 
     private fun load(settings : Settings) {
 
-        mModeSwitch.isChecked = (settings.driveMode == DriveMode.TANK)
+        mModeSwitch.isChecked = (settings.driveMode == DriveMode.LEVERS)
 
         mDevice = settings.device
         var position = mDeviceAdapter.currentList.indexOf(mDevice)
