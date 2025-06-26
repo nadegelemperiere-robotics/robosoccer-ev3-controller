@@ -14,6 +14,6 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
 enum class DriveMode(val text: String) : Parcelable {
-    ARCADE("Arcade"),               /* one joystick, coding for power and orientation */
-    TANK("Tank");                   /* two joysticks, controlling left and right robot wheels */
+    JOYSTICK("Joystick"),               /* one joystick, coding for power and orientation */
+    LEVERS("Levers");                   /* two joysticks, one for power, the other one for orientation */
 }

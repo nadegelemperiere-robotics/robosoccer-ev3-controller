@@ -4,8 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/settings_root"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:elevation="@dimen/lines_margin"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="20sp"
+    app:layout_constraintTop_toTopOf="parent"
     tools:context=".ui.settings.SettingsFragment">
 
     <TextView
@@ -13,9 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lines_margin"
+        android:gravity="center"
         android:text="@string/settings_device_subtitle"
         android:textAlignment="center"
-        android:gravity="center"
         android:textSize="@dimen/font_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -55,9 +56,9 @@
             android:layout_margin="@dimen/lines_margin"
             android:clickable="false"
             android:contentDescription="@string/settings_device_swipe"
+            android:gravity="center"
             android:scrollbars="vertical"
             android:textAlignment="center"
-            android:gravity="center"
             android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -81,11 +82,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lines_margin"
+        android:gravity="center"
         android:text="@string/settings_mode_subtitle"
         android:textAlignment="center"
         android:textSize="@dimen/font_size"
         android:textStyle="bold"
-        android:gravity="center"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_device_divider" />
@@ -99,13 +100,13 @@
         app:layout_constraintTop_toBottomOf="@+id/settings_mode_subtitle">
 
         <TextView
-            android:id="@+id/settings_mode_arcade"
+            android:id="@+id/settings_mode_joystick"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
             android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
-            android:text="@string/settings_mode_arcade"
+            android:text="@string/settings_mode_joystick"
             android:textAlignment="viewStart"
             android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -121,7 +122,7 @@
             android:gravity="center"
             android:textAlignment="center"
             android:textSize="@dimen/font_size"
-            app:layout_constraintBaseline_toBaselineOf="@+id/settings_mode_arcade"
+            app:layout_constraintBaseline_toBaselineOf="@+id/settings_mode_joystick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -129,16 +130,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/settings_mode_tank"
+            android:id="@+id/settings_mode_levers"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
-            android:text="@string/settings_mode_tank"
+            android:text="@string/settings_mode_levers"
             android:textAlignment="viewEnd"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
-            app:layout_constraintBaseline_toBaselineOf="@+id/settings_mode_arcade"
+            app:layout_constraintBaseline_toBaselineOf="@+id/settings_mode_joystick"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/settings_mode_switch"
@@ -154,15 +155,15 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_mode_container" />
-    
+
     <TextView
         android:id="@+id/settings_motors_subtitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lines_margin"
+        android:gravity="center"
         android:text="@string/settings_motors_subtitle"
         android:textAlignment="center"
-        android:gravity="center"
         android:textSize="@dimen/font_size"
         android:textStyle="bold"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -182,11 +183,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
             android:text="@string/settings_motors_left"
             android:textAlignment="viewStart"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_left_divider"
@@ -199,8 +200,8 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="@dimen/motors_separation"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -210,10 +211,10 @@
             android:layout_margin="@dimen/lines_margin"
             android:clickable="false"
             android:contentDescription="@string/settings_motors_left"
+            android:gravity="center"
             android:padding="@dimen/lines_margin"
             android:scrollbars="vertical"
             android:textAlignment="center"
-            android:gravity="center"
             android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_divider"
@@ -236,16 +237,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
             android:text="@string/settings_motors_inverted"
             android:textAlignment="viewEnd"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_left_inverted_checkbox"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -261,11 +262,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
             android:text="@string/settings_motors_right"
             android:textAlignment="viewStart"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_right_divider"
@@ -278,8 +279,8 @@
             android:background="?android:attr/listDivider"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="@dimen/motors_separation"
-            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -289,10 +290,10 @@
             android:layout_margin="@dimen/lines_margin"
             android:clickable="false"
             android:contentDescription="@string/settings_motors_right"
+            android:gravity="center"
             android:padding="@dimen/lines_margin"
             android:scrollbars="vertical"
             android:textAlignment="center"
-            android:gravity="center"
             android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_divider"
@@ -315,16 +316,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
             android:text="@string/settings_motors_inverted"
             android:textAlignment="viewEnd"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_right_inverted_checkbox"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -340,11 +341,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:text="@string/settings_motors_first"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_first"
             android:textAlignment="viewStart"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_checkbox"
@@ -359,14 +360,14 @@
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_first"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_divider"
             app:layout_constraintTop_toTopOf="parent" />
-        
+
         <View
             android:id="@+id/settings_motors_first_divider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="?android:attr/listDivider"
-            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -376,13 +377,13 @@
             android:layout_width="@dimen/lines_height"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:clickable="false"
             android:contentDescription="@string/settings_motors_first"
+            android:gravity="center"
             android:padding="@dimen/lines_margin"
             android:scrollbars="vertical"
-            android:textSize="@dimen/font_size"
             android:textAlignment="center"
-            android:gravity="center"
-            android:clickable="false"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_divider"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_first_inverted_checkbox"
@@ -404,16 +405,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
             android:text="@string/settings_motors_inverted"
             android:textAlignment="viewEnd"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_first_inverted_checkbox"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -429,11 +430,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:text="@string/settings_motors_second"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
+            android:text="@string/settings_motors_second"
             android:textAlignment="viewStart"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_checkbox"
@@ -448,14 +449,14 @@
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_second"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_divider"
             app:layout_constraintTop_toTopOf="parent" />
-        
+
         <View
             android:id="@+id/settings_motors_second_divider"
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:background="?android:attr/listDivider"
-            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHorizontal_bias="@dimen/motors_separation"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -465,19 +466,19 @@
             android:layout_width="@dimen/lines_height"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
-            android:padding="@dimen/lines_margin"
-            android:contentDescription="@string/settings_motors_second"
-            android:scrollbars="vertical"
-            android:textSize="@dimen/font_size"
-            android:textAlignment="center"
-            android:gravity="center"
             android:clickable="false"
+            android:contentDescription="@string/settings_motors_second"
+            android:gravity="center"
+            android:padding="@dimen/lines_margin"
+            android:scrollbars="vertical"
+            android:textAlignment="center"
+            android:textSize="@dimen/font_size"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_divider"
             app:layout_constraintRight_toLeftOf="@+id/settings_motors_second_inverted_checkbox"
             app:layout_constraintTop_toTopOf="parent"
             tools:listitem="@layout/string_choice" />
-        
+
         <CheckBox
             android:id="@+id/settings_motors_second_inverted_checkbox"
             android:layout_width="wrap_content"
@@ -493,16 +494,16 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_margin="@dimen/lines_margin"
+            android:gravity="center_vertical"
             android:padding="@dimen/lines_margin"
             android:text="@string/settings_motors_inverted"
             android:textAlignment="viewEnd"
             android:textSize="@dimen/font_size"
-            android:gravity="center_vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/settings_motors_second_inverted_checkbox"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-    
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -520,10 +521,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/lines_margin"
         android:text="@string/settings_save"
-        app:layout_constraintTop_toBottomOf="@+id/settings_motors_divider"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/settings_motors_divider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

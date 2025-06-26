@@ -7,6 +7,7 @@
     <dimen name="lines_margin">4dp</dimen>
     <dimen name="lines_height_inner">56dp</dimen>
     <dimen name="font_size">16sp</dimen>
+    <dimen name="title_font_size">24sp</dimen>
     <dimen name="motor_joystick">200dp</dimen>
     <dimen name="motor_lever">170dp</dimen>
     <dimen name="attachments_lever">80sp</dimen>

@@ -7,8 +7,8 @@ option optimize_for = LITE_RUNTIME;
 
 
 enum DriveModeProto {
-  ARCADE = 0;
-  TANK   = 1;
+  JOYSTICK = 0;
+  LEVERS   = 1;
 }
 
 enum MotorProto {
