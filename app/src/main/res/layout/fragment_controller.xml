@@ -5,9 +5,6 @@
     android:id="@+id/controller_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginTop="100sp"
-    android:layout_marginLeft="20sp"
-    android:layout_marginRight="20sp"
     app:layout_constraintTop_toTopOf="parent"
     tools:context=".ui.controller.ControllerFragment">
 
