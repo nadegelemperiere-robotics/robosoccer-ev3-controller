@@ -159,6 +159,11 @@ class ControllerFragment : Fragment() {
         _binding = null
     }
 
+    override fun onDestroy() {
+        mShared.state.value.disconnect()
+        super.onDestroy()
+    }
+
     @SuppressLint("SetTextI18n")
     private fun load(settings: Settings) {
 

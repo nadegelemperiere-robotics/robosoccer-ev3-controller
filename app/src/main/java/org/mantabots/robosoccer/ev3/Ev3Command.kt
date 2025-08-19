@@ -6,11 +6,12 @@
    ------------------------------------------------------- */
 package org.mantabots.robosoccer.ev3
 
-/* Androidx includes */
+/* Android includes */
+import android.util.Log
+import java.util.concurrent.atomic.AtomicInteger
 
-/* Kotlinx includes */
 
-class Ev3Message(id: Int, reply: Boolean)
+class Ev3Command(shallReply: Boolean)
 {
     val sDirectCommandReply = 0x00
     val sDirectCommandNoReply = 0x80
@@ -20,15 +21,22 @@ class Ev3Message(id: Int, reply: Boolean)
     var mLength = 7
 
     init {
+
         mMessage.add(((mLength - 2) and 0x00FF).toByte())
         mMessage.add((((mLength - 2) and 0xFF00) shr 8).toByte())
-        mMessage.add(((id) and 0x00FF).toByte())
-        mMessage.add((((id) and 0xFF00) shr 8).toByte())
-        if(reply) { mMessage.add(sDirectCommandReply.toByte()) }
+        mMessage.add(((0) and 0x00FF).toByte())
+        mMessage.add((((0) and 0xFF00) shr 8).toByte())
+        if(shallReply) { mMessage.add(sDirectCommandReply.toByte()) }
         else { mMessage.add(sDirectCommandNoReply.toByte()) }
-        if(reply) { mMessage.add(sReplySize.toByte()) }
+        if(shallReply) { mMessage.add(sReplySize.toByte()) }
         else { mMessage.add(0x00.toByte()) }
         mMessage.add(0x00.toByte())
+    }
+
+    fun addId(id: Int)
+    {
+        mMessage[2] = ((id) and 0x00FF).toByte()
+        mMessage[3] = (((id) and 0xFF00) shr 8).toByte()
     }
 
     fun addCode(value: Ev3OpCode) {

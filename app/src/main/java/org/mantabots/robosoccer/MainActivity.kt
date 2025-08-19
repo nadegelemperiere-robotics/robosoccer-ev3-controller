@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.os.Build
 import android.content.pm.ActivityInfo
 import android.content.pm.PackageManager
+import android.util.Log
 
 /* Material includes */
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -68,6 +69,11 @@ class MainActivity : AppCompatActivity() {
                 else ->                       // any other future tab
                     ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
             }
+        }
+
+        Thread.setDefaultUncaughtExceptionHandler { thread, exception ->
+            Log.e("UncaughtException", "Fatal in thread ${thread.name}", exception)
+            // Optionally send to crash reporting tool like Firebase Crashlytics
         }
     }
 

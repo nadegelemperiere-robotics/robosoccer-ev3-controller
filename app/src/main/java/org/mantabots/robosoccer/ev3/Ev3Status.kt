@@ -14,12 +14,14 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize                /* makes it bundle-friendly for NavComponent */
 enum class Ev3Status(val code: Int) : Parcelable {
+    INVALID_STATUS(0x00),
     DIRECT_REPLY_OK(0x02),
     SYSTEM_REPLY_OK(0x03),
     DIRECT_REPLY_ERROR(0x04),
     SYSTEM_REPLY_ERROR(0x05),
     INVALID_SIZE(0xDD),
-    INVALID_ID(0xDE);
+    INVALID_ID(0xDE),
+    TIMEOUT(0xDF);
 
     companion object {
         /**
